@@ -68,11 +68,6 @@ int main(int argc, char ** argv)
 
     system(command);
 
-    for(int i = 0; i < argc; i++)
-    {
-        cout << "Argument " << i << ": " << argv[i] << endl;
-    }
-
     if(argc > 1)
     {
         cout << argc << endl;
