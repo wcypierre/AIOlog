@@ -1,30 +1,9 @@
 #include <iostream>
 #include <cstring>
 #include <cstdlib>
-
-removed output to sdcard(as it can't be done via adb automatically)
-
-#ifdef __unix__
-    const int separator_status = 1;
-    const char separator[] = "./";
-#elif defined WIN32
-    const int separator_status = 0;
-    const char separator[] = "";
-#else
-    const int separator_status = 1;
-    const char separator[] = "./";
-#endif
+#include "log.h"
 
 using namespace std;
-
-void log_all();
-void log_logcat();
-void log_last_kmsg();
-void log_dmesg();
-void log_kmsg();
-void log_kernel_version();
-
-void help();
 
 int main(int argc, char ** argv)
 {
@@ -56,19 +35,6 @@ int main(int argc, char ** argv)
     {
         strcpy(command, separator);
         strcat(command, "adb start-server");
-    }
-
-    system(command);
-
-    if(separator_status == 0)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb remount");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb remount");
     }
 
     system(command);
@@ -228,7 +194,8 @@ int main(int argc, char ** argv)
 
     if(separator_status == 0)
     {
-        strcpy(command, "adb -d shell uname -a");
+        strcpy(command, separator);
+        strcat(command, "adb -d shell uname -a");
     }
     else if(separator_status == 1)
     {
@@ -276,7 +243,8 @@ int main(int argc, char ** argv)
 
                     if(separator_status == 0)
                     {
-                        strcpy(command, "adb devices");
+                        strcpy(command, separator);
+                        strcat(command, "adb devices");
                     }
                     else if(separator_status == 1)
                     {
@@ -293,7 +261,8 @@ int main(int argc, char ** argv)
 
                     if(separator_status == 0)
                     {
-                        strcpy(command, "adb -s ");
+                        strcpy(command, separator);
+                        strcat(command, "adb -s ");
                         strcat(command, device_id);
                         strcat(command, " shell uname -a");
                     }
@@ -333,11 +302,13 @@ int main(int argc, char ** argv)
             {
                 if(device_id[0] == '\0')
                 {
-                    strcpy(command, "adb shell getprop ro.product.model");
+                    strcpy(command, separator);
+                    strcat(command, "adb shell getprop ro.product.model");
                 }
                 else
                 {
-                    strcpy(command, "adb -s ");
+                    strcpy(command, separator);
+                    strcat(command, "adb -s ");
                     strcat(command, device_id);
                     strcat(command, " shell getprop ro.product.model");
                 }
@@ -443,7 +414,8 @@ int main(int argc, char ** argv)
 
     if(separator_status == 0)
     {
-        strcpy(command, "adb kill-server");
+        strcpy(command, separator);
+        strcat(command, "adb kill-server");
     }
     else if(separator_status == 1)
     {
@@ -456,181 +428,4 @@ int main(int argc, char ** argv)
     cin.get();
 
     return 0;
-}
-
-void log_all()
-{
-    log_logcat();
-    log_dmesg();
-    log_last_kmsg();
-    log_kmsg();
-}
-
-void log_logcat()
-{
-    char command[100];
-
-    cout << endl;
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb wait-for-device");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb wait-for-device");
-    }
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb logcat -d -v long > logcat.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb logcat -d -v long > logcat.txt");
-    }
-
-    system(command);
-
-    cout << "Logcat saved at logcat.txt" << endl;
-}
-
-void log_last_kmsg()
-{
-    char command[100];
-
-    cout << endl;
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb wait-for-device");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb wait-for-device");
-    }
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell cat /proc/last_kmsg > last_kmsg.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell cat /proc/last_kmsg > last_kmsg.txt");
-    }
-
-    system(command);
-
-    cout << "last_kmsg saved at last_kmsg.txt" << endl;
-}
-
-void log_dmesg()
-{
-    char command[100];
-
-    cout << endl;
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb wait-for-device");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb wait-for-device");
-    }
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell dmesg > dmesg.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell dmesg > dmesg.txt");
-    }
-
-    system(command);
-
-    cout << "dmesg saved at dmesg.txt" << endl;
-}
-
-void log_kmsg()
-{
-    char command[100];
-
-    cout << endl;
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb wait-for-device");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb wait-for-device");
-    }
-
-    system(command);
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell cat /proc/kmsg > kmsg.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell cat /proc/kmsg > kmsg.txt");
-    }
-
-    system(command);
-
-    cout << "kmsg saved at kmsg.txt" << endl;
-}
-
-void log_kernel_version()
-{
-    char command[100];
-
-    cout << endl;
-
-    strcpy(command, "adb wait-for-device");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb wait-for-device");
-    }
-
-    system(command);
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell uname -a > kernel_version.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell uname -a > kernel_version.txt");
-    }
-
-    system(command);
-}
-
-void help()
-{
-    cout << "Format: %filename% %parameter%" << endl;
-    cout << "Format List: " << endl;
-    cout << "--device-id -id %id_value%\tChooses the Device ID to be used if there are more than one devices at the computer" << endl;
-    cout << "--logcat -l\t\t\tDumps the logcat at the current directory and the file is called logcat.txt" << endl;
-    cout << "--last-kmsg -lk\t\t\tDumps the last_kmsg at the current directory and the file is called last_kmsg.txt" << endl;
-    cout << "--dmesg -d\t\t\tDumps the dmesg at the current directory and the file is called dmesg.txt" << endl;
-    cout << "--kmsg -k\t\t\tDumps the kmsg at the current directory and the file is called kmsg.txt" << endl;
-
-    cout << endl << "Press enter to continue" << endl;
-    cin.get();
 }
