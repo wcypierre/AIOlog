@@ -210,13 +210,7 @@ int main(int argc, char ** argv)
         strcat(command, "adb -d shell uname -a");
     }
 
-    cout << command << endl;
-
     int device_availability = system(command);
-
-    cout << "Device Availability: " << device_availability << endl;
-
-    return device_availability;
 
     if(argc == 0)
     {
@@ -419,23 +413,6 @@ int main(int argc, char ** argv)
     {
         system("clear");
     }
-
-    cout << "Killing adb............" << endl;
-
-    if(separator_status == 0)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb kill-server");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb kill-server");
-    }
-
-    system(command);
-
-    cin.get();
 
     return 0;
 }
