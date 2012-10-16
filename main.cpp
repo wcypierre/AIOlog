@@ -283,11 +283,11 @@ int main(int argc, char ** argv)
 
                     if(separator_status == 0)
                     {
-                        //system("cls");
+                        system("cls");
                     }
                     else
                     {
-                        //system("clear");
+                        system("clear");
                     }
                 }while(device_status == -1);
             }
