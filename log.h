@@ -3,7 +3,7 @@
 
 #ifdef __unix__
     const int separator_status = 1;
-    const char separator[] = "./";
+    const char separator[] = "";
 #elif defined WIN32
     const int separator_status = 0;
     const char separator[] = "";
