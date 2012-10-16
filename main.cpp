@@ -1,22 +1,22 @@
-/* 
-main.cpp
-This file acts as an interface to interact with the users
-
-Copyright (c) 2012, wcypierre <wcypierre@gmail.com>
-
-This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+/*
+ *   main.cpp
+ *   This file acts as an interface to interact with the users
+ *
+ *   Copyright (c) 2012, wcypierre <wcypierre@gmail.com>
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <iostream>
 #include <cstring>
@@ -32,19 +32,6 @@ int main(int argc, char ** argv)
     device_id[0] = '\0';
 
     char command[100];
-
-    if(separator_status == 0)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb kill-server");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb kill-server");
-    }
-
-    system(command);
 
     if(separator_status == 0)
     {
@@ -223,11 +210,13 @@ int main(int argc, char ** argv)
         strcat(command, "adb -d shell uname -a");
     }
 
-    cout << "Command: " << command << endl;
+    cout << command << endl;
 
     int device_availability = system(command);
 
-    cout << endl << device_availability << endl;
+    cout << "Device Availability: " << device_availability << endl;
+
+    return device_availability;
 
     if(argc == 0)
     {
@@ -296,16 +285,17 @@ int main(int argc, char ** argv)
 
                     device_status = system(command);
 
+                    cout << "Device Status: " << device_status << endl;
+
                     if(separator_status == 0)
                     {
-                        system("cls");
+                        //system("cls");
                     }
                     else
                     {
-                        system("clear");
+                        //system("clear");
                     }
-                }while(strlen(device_id) == 0 || device_status == -1);
-
+                }while(device_status == -1);
             }
             else
             {
