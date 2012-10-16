@@ -2,6 +2,8 @@
 #include <cstring>
 #include <cstdlib>
 
+removed output to sdcard(as it can't be done via adb automatically)
+
 #ifdef __unix__
     const int separator_status = 1;
     const char separator[] = "./";
@@ -34,7 +36,8 @@ int main(int argc, char ** argv)
 
     if(separator_status == 0)
     {
-        strcpy(command, "adb kill-server");
+        strcpy(command, separator);
+        strcat(command, "adb kill-server");
     }
     else if(separator_status == 1)
     {
@@ -46,7 +49,8 @@ int main(int argc, char ** argv)
 
     if(separator_status == 0)
     {
-        strcpy(command, "adb start-server");
+        strcpy(command, separator);
+        strcat(command, "adb start-server");
     }
     else if(separator_status == 1)
     {
@@ -58,7 +62,8 @@ int main(int argc, char ** argv)
 
     if(separator_status == 0)
     {
-        strcpy(command, "adb remount");
+        strcpy(command, separator);
+        strcat(command, "adb remount");
     }
     else if(separator_status == 1)
     {
@@ -339,8 +344,18 @@ int main(int argc, char ** argv)
             }
             else if(separator_status == 1)
             {
-                strcpy(command, separator);
-                strcat(command, "adb shell getprop ro.product.model");
+                if(device_id[0] == '\0')
+                {
+                    strcpy(command, separator);
+                    strcat(command, "adb shell getprop ro.product.model");
+                }
+                else
+                {
+                    strcpy(command, separator);
+                    strcat(command, "adb -s ");
+                    strcat(command, device_id);
+                    strcat(command, " shell getprop ro.product.model");
+                }
             }
 
             system(command);
@@ -479,18 +494,6 @@ void log_logcat()
 
     system(command);
 
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb logcat -d -v long > /sdcard/logcat.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb logcat -d -v long > /sdcard/logcat.txt");
-    }
-
-    system(command);
-
     cout << "Logcat saved at logcat.txt" << endl;
 }
 
@@ -518,18 +521,6 @@ void log_last_kmsg()
     {
         strcpy(command, separator);
         strcat(command, "adb shell cat /proc/last_kmsg > last_kmsg.txt");
-    }
-
-    system(command);
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell cat /proc/last_kmsg > /sdcard/last_kmsg.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell cat /proc/last_kmsg > /sdcard/last_kmsg.txt");
     }
 
     system(command);
@@ -565,18 +556,6 @@ void log_dmesg()
 
     system(command);
 
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell dmesg > /sdcard/dmesg.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell dmesg > /sdcard/dmesg.txt");
-    }
-
-    system(command);
-
     cout << "dmesg saved at dmesg.txt" << endl;
 }
 
@@ -600,28 +579,15 @@ void log_kmsg()
 
     if(separator_status == 0)
     {
-        strcpy(command, "adb shell -d cat /proc/kmsg > kmsg.txt");
+        strcpy(command, "adb shell cat /proc/kmsg > kmsg.txt");
     }
     else if(separator_status == 1)
     {
         strcpy(command, separator);
-        strcat(command, "adb shell -d cat /proc/kmsg > kmsg.txt");
+        strcat(command, "adb shell cat /proc/kmsg > kmsg.txt");
     }
 
     system(command);
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell -d cat /proc/kmsg > /sdcard/kmsg.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell -d cat /proc/kmsg > /sdcard/kmsg.txt");
-    }
-
-    system(command);
-
 
     cout << "kmsg saved at kmsg.txt" << endl;
 }
@@ -632,9 +598,7 @@ void log_kernel_version()
 
     cout << endl;
 
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb wait-for-device");
+    strcpy(command, "adb wait-for-device");
     }
     else if(separator_status == 1)
     {
@@ -652,18 +616,6 @@ void log_kernel_version()
     {
         strcpy(command, separator);
         strcat(command, "adb shell uname -a > kernel_version.txt");
-    }
-
-    system(command);
-
-    if(separator_status == 0)
-    {
-        strcpy(command, "adb shell uname -a > /sdcard/kernel_version.txt");
-    }
-    else if(separator_status == 1)
-    {
-        strcpy(command, separator);
-        strcat(command, "adb shell uname -a > /sdcard/kernel_version.txt");
     }
 
     system(command);
