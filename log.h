@@ -1,15 +1,43 @@
+/* 
+log.h
+
+Copyright (c) 2012, wcypierre <wcypierre@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #ifndef LOG_H // header guard
 #define LOG_H
 
-#ifdef __unix__
-    const int separator_status = 1;
-    const char separator[] = "";
-#elif defined WIN32
+#ifdef _WIN64
     const int separator_status = 0;
     const char separator[] = "";
-#else
+#elif _WIN32
+    const int separator_status = 0;
+    const char separator[] = "";
+#elif __APPLE__
     const int separator_status = 1;
     const char separator[] = "./";
+#elif __linux
+    const int separator_status = 1;
+    const char separator[] = "";
+#elif __unix
+    const int separator_status = 1;
+    const char separator[] = "";
+#elif __posix
+    const int separator_status = 1;
+    const char separator[] = "";
 #endif
 
 void log_all();
