@@ -279,8 +279,6 @@ int main(int argc, char ** argv)
 
                     device_status = system(command);
 
-                    cout << "Device Status: " << device_status << endl;
-
                     if(separator_status == 0)
                     {
                         system("cls");
