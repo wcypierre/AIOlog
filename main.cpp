@@ -262,22 +262,25 @@ int main(int argc, char ** argv)
                     cout << "Please enter your Device ID: ";
                     cin.getline(device_id, 25);
 
-                    if(separator_status == 0)
+                    if(device_id[0] != '\0')
                     {
-                        strcpy(command, separator);
-                        strcat(command, "adb -s ");
-                        strcat(command, device_id);
-                        strcat(command, " shell uname -a");
-                    }
-                    else if(separator_status == 1)
-                    {
-                        strcpy(command, separator);
-                        strcat(command, "adb -s ");
-                        strcat(command, device_id);
-                        strcat(command, " shell uname -a");
-                    }
+                        if(separator_status == 0)
+                        {
+                            strcpy(command, separator);
+                            strcat(command, "adb -s ");
+                            strcat(command, device_id);
+                            strcat(command, " shell uname -a");
+                        }
+                        else if(separator_status == 1)
+                        {
+                            strcpy(command, separator);
+                            strcat(command, "adb -s ");
+                            strcat(command, device_id);
+                            strcat(command, " shell uname -a");
+                        }
 
-                    device_status = system(command);
+                        device_status = system(command);
+                    }
 
                     if(separator_status == 0)
                     {
@@ -288,6 +291,14 @@ int main(int argc, char ** argv)
                         system("clear");
                     }
                 }while(device_status == -1);
+
+                //device_availability = 1;
+
+                cout << "*************************************************" << endl;
+                cout << "*            AIOlog - All in One Logger         *" << endl;
+                cout << "*                  Version: 0.1                 *" << endl;
+                cout << "*              By: wcypierre - xda              *" << endl;
+                cout << "*************************************************" << endl << endl;
             }
             else
             {
