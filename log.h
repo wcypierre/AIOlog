@@ -43,9 +43,11 @@
 
 void log_all();
 void log_logcat();
+void log_logcat_continuous();
 void log_last_kmsg();
 void log_dmesg();
 void log_kmsg();
+void log_kmsg_continuous();
 void log_kernel_version();
 
 void help();

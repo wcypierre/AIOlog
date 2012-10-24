@@ -340,22 +340,24 @@ int main(int argc, char ** argv)
             cout << "Functions: " << endl;
             cout << "1. Log all(Logcat, last_kmsg, dmesg, kmsg)" << endl;
             cout << "2. Logcat" << endl;
-            cout << "3. Last_Kmsg" << endl;
-            cout << "4. Dmesg" << endl;
-            cout << "5. Kmsg" << endl;
-            cout << "6. Kernel Version" << endl;
-            cout << "7. Quit" << endl << endl;
+            cout << "3. Logcat Continuous" << endl;
+            cout << "4. Last_Kmsg" << endl;
+            cout << "5. Dmesg" << endl;
+            cout << "6. Kmsg" << endl;
+            cout << "7. Kmsg Continuous" << endl;
+            cout << "8. Kernel Version" << endl;
+            cout << "9. Quit" << endl << endl;
 
             do
             {
                 cout << "Please enter your selection: ";
                 cin  >> selection;
 
-                if(selection != '1' && selection != '2' && selection != '3' && selection != '4'  && selection != '5' && selection != '6' && selection != '7')
+                if(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != '9')
                 {
                     cout << "Invalid selection, please try again" << endl;
                 }
-            }while(selection != '1' && selection != '2' && selection != '3' && selection != '4'  && selection != '5' && selection != '6' && selection != '7');
+            }while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != '9');
 
             if(selection == '1')
             {
@@ -367,26 +369,34 @@ int main(int argc, char ** argv)
             }
             else if(selection == '3')
             {
-                log_last_kmsg();
+                log_logcat_continuous();
             }
             else if(selection == '4')
             {
-                log_dmesg();
+                log_last_kmsg();
             }
             else if(selection == '5')
             {
-                log_kmsg();
+                log_dmesg();
             }
             else if(selection == '6')
             {
-                log_kernel_version();
+                log_kmsg();
             }
             else if(selection == '7')
+            {
+                log_kmsg_continuous();
+            }
+            else if(selection == '8')
+            {
+                log_kernel_version();
+            }
+            else if(selection == '9')
             {
 
             }
 
-            if(selection != '7')
+            if(selection != '9')
             {
                 cout << endl << "Press enter to continue" << endl;
 
@@ -402,7 +412,7 @@ int main(int argc, char ** argv)
                     system("clear");
                 }
             }
-        }while(selection != '7');
+        }while(selection != '9');
     }
 
     if(separator_status == 0)

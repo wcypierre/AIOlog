@@ -66,6 +66,40 @@ void log_logcat()
     cout << "Logcat saved at logcat.txt" << endl;
 }
 
+void log_logcat_continuous()
+{
+    char command[100];
+
+    cout << endl;
+
+    if(separator_status == 0)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb wait-for-device");
+    }
+    else if(separator_status == 1)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb wait-for-device");
+    }
+
+    cout << "Logcat will be saved at logcat.txt" << endl;
+    cout << "Please press CTRL and C to close the program and stop the logging" << endl;
+
+    if(separator_status == 0)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb logcat -v long > logcat.txt");
+    }
+    else if(separator_status == 1)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb logcat -v long > logcat.txt");
+    }
+
+    system(command);
+}
+
 void log_last_kmsg()
 {
     char command[100];
@@ -167,6 +201,42 @@ void log_kmsg()
     cout << "kmsg saved at kmsg.txt" << endl;
 }
 
+void log_kmsg_continuous()
+{
+    char command[100];
+
+    cout << endl;
+
+    if(separator_status == 0)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb wait-for-device");
+    }
+    else if(separator_status == 1)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb wait-for-device");
+    }
+
+    system(command);
+
+    cout << "kmsg will be saved at kmsg.txt" << endl;
+    cout << "Please press CTRL and C to close the program and stop the logging" << endl;
+
+    if(separator_status == 0)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb shell cat /proc/kmsg > kmsg.txt");
+    }
+    else if(separator_status == 1)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb shell cat /proc/kmsg > kmsg.txt");
+    }
+
+    system(command);
+}
+
 void log_kernel_version()
 {
     char command[100];
@@ -198,6 +268,8 @@ void log_kernel_version()
     }
 
     system(command);
+
+    cout << "Kernel Version is saved at kernel_version.txt" << endl;
 }
 
 void help()
