@@ -286,6 +286,7 @@ void help()
     cin.get();
 }
 
+void header();
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();

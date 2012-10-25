@@ -53,6 +53,7 @@ void log_kernel_version();
 void help();
 
 // To be added
+void header();
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();

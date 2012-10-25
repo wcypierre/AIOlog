@@ -240,7 +240,7 @@ int main(int argc, char ** argv)
                 {
                     cout << "*************************************************" << endl;
                     cout << "*            AIOlog - All in One Logger         *" << endl;
-                    cout << "*                  Version: 0.1                 *" << endl;
+                    cout << "*                  Version: 0.2                 *" << endl;
                     cout << "*              By: wcypierre - xda              *" << endl;
                     cout << "*************************************************" << endl << endl;
 
@@ -296,7 +296,7 @@ int main(int argc, char ** argv)
 
                 cout << "*************************************************" << endl;
                 cout << "*            AIOlog - All in One Logger         *" << endl;
-                cout << "*                  Version: 0.1                 *" << endl;
+                cout << "*                  Version: 0.2                 *" << endl;
                 cout << "*              By: wcypierre - xda              *" << endl;
                 cout << "*************************************************" << endl << endl;
             }
@@ -304,7 +304,7 @@ int main(int argc, char ** argv)
             {
                 cout << "*************************************************" << endl;
                 cout << "*            AIOlog - All in One Logger         *" << endl;
-                cout << "*                  Version: 0.1                 *" << endl;
+                cout << "*                  Version: 0.2                 *" << endl;
                 cout << "*              By: wcypierre - xda              *" << endl;
                 cout << "*************************************************" << endl << endl;
             }
@@ -355,18 +355,18 @@ int main(int argc, char ** argv)
             cout << "6. Kmsg" << endl;
             cout << "7. Kmsg Continuous" << endl;
             cout << "8. Kernel Version" << endl;
-            cout << "9. Quit" << endl << endl;
+            cout << "q. Quit" << endl << endl;
 
             do
             {
                 cout << "Please enter your selection: ";
                 cin  >> selection;
 
-                if(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != '9')
+                if(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != 'q' && selection != 'Q')
                 {
                     cout << "Invalid selection, please try again" << endl;
                 }
-            }while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != '9');
+            }while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != 'q' && selection != 'Q');
 
             if(selection == '1')
             {
@@ -400,12 +400,12 @@ int main(int argc, char ** argv)
             {
                 log_kernel_version();
             }
-            else if(selection == '9')
+            else if(selection == 'q' || selection == 'Q')
             {
 
             }
 
-            if(selection != '9')
+            if(selection != 'q' && selection != 'Q')
             {
                 cout << endl << "Press enter to continue" << endl;
 
@@ -421,7 +421,7 @@ int main(int argc, char ** argv)
                     system("clear");
                 }
             }
-        }while(selection != '9');
+        }while(selection != 'q' && selection != 'Q');
     }
 
     if(separator_status == 0)
