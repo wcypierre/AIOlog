@@ -50,10 +50,10 @@ void log_kmsg();
 void log_kmsg_continuous();
 void log_kernel_version();
 
+void header();
 void help();
 
 // To be added
-void header();
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();

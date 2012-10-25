@@ -272,6 +272,15 @@ void log_kernel_version()
     cout << "Kernel Version is saved at kernel_version.txt" << endl;
 }
 
+void header()
+{
+    cout << "*************************************************" << endl;
+    cout << "*            AIOlog - All in One Logger         *" << endl;
+    cout << "*                  Version: 0.2                 *" << endl;
+    cout << "*              By: wcypierre - xda              *" << endl;
+    cout << "*************************************************" << endl << endl;
+}
+
 void help()
 {
     cout << "Format: %filename% %parameter%" << endl;
@@ -286,7 +295,6 @@ void help()
     cin.get();
 }
 
-void header();
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();

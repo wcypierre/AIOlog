@@ -238,11 +238,7 @@ int main(int argc, char ** argv)
 
                 do
                 {
-                    cout << "*************************************************" << endl;
-                    cout << "*            AIOlog - All in One Logger         *" << endl;
-                    cout << "*                  Version: 0.2                 *" << endl;
-                    cout << "*              By: wcypierre - xda              *" << endl;
-                    cout << "*************************************************" << endl << endl;
+                    header();
 
                     if(separator_status == 0)
                     {
@@ -294,19 +290,11 @@ int main(int argc, char ** argv)
 
                 device_availability = 1; // Disable reprompt of Device ID after the Device ID has been entered
 
-                cout << "*************************************************" << endl;
-                cout << "*            AIOlog - All in One Logger         *" << endl;
-                cout << "*                  Version: 0.2                 *" << endl;
-                cout << "*              By: wcypierre - xda              *" << endl;
-                cout << "*************************************************" << endl << endl;
+                header();
             }
             else
             {
-                cout << "*************************************************" << endl;
-                cout << "*            AIOlog - All in One Logger         *" << endl;
-                cout << "*                  Version: 0.2                 *" << endl;
-                cout << "*              By: wcypierre - xda              *" << endl;
-                cout << "*************************************************" << endl << endl;
+                header();
             }
 
             cout << "Device Model: ";
