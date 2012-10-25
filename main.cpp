@@ -292,7 +292,7 @@ int main(int argc, char ** argv)
                     }
                 }while(device_status == -1);
 
-                //device_availability = 1;
+                device_availability = 1; // Disable reprompt of Device ID after the Device ID has been entered
 
                 cout << "*************************************************" << endl;
                 cout << "*            AIOlog - All in One Logger         *" << endl;
