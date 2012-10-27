@@ -344,7 +344,7 @@ int main(int argc, char ** argv)
             cout << "6. Kmsg" << endl;
             cout << "7. Kmsg Continuous" << endl;
             cout << "8. Miscellaneous" << endl;
-            cout << "q. Quit" << endl << endl;
+            cout << "Q. Quit" << endl << endl;
 
             do
             {
