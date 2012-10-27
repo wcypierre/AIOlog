@@ -100,6 +100,39 @@ void log_logcat_continuous()
     system(command);
 }
 
+void log_logcat_radio()
+{
+    char command[100];
+
+    cout << endl;
+
+    if(separator_status == 0)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb wait-for-device");
+    }
+    else if(separator_status == 1)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb wait-for-device");
+    }
+
+    cout << "Logcat for radio issues will be saved at logcat_radio.txt" << endl;
+
+    if(separator_status == 0)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb logcat -d -b radio > logcat_radio.txt");
+    }
+    else if(separator_status == 1)
+    {
+        strcpy(command, separator);
+        strcat(command, "adb logcat -d -b radio > logcat_radio.txt");
+    }
+
+    system(command);
+}
+
 void log_last_kmsg()
 {
     char command[100];
@@ -298,6 +331,7 @@ void help()
 void misc_options()
 {
     cout << "1. Kernel Version" << endl;
+    cout << "2. Logcat Radio" << endl;
 }
 
 void log_archive_win();

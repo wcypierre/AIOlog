@@ -394,13 +394,20 @@ int main(int argc, char ** argv)
                     cout << endl << "Please enter your selection: ";
                     cin  >> misc_selection;
 
-                    if(misc_selection != '1')
+                    if(misc_selection != '1' && misc_selection != '2')
                     {
                         cout << "Invalid selection, please try again by selecting the number of the option" << endl;
                     }
-                }while(misc_selection != '1');
+                }while(misc_selection != '1' && misc_selection != '2');
 
-                log_kernel_version();
+                if(misc_selection == '1')
+                {
+                    log_kernel_version();
+                }
+                else if(misc_selection == '2')
+                {
+                    log_logcat_radio();
+                }
             }
             else if(selection == 'q' || selection == 'Q')
             {

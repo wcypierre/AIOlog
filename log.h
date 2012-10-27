@@ -44,6 +44,7 @@
 void log_all();
 void log_logcat();
 void log_logcat_continuous();
+void log_logcat_radio();
 void log_last_kmsg();
 void log_dmesg();
 void log_kmsg();
@@ -52,6 +53,7 @@ void log_kernel_version();
 
 void header();
 void help();
+
 void misc_options();
 
 // To be added
