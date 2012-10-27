@@ -32,6 +32,7 @@ int main(int argc, char ** argv)
     device_id[0] = '\0';
 
     char command[100];
+    char misc_selection;
 
     if(separator_status == 0)
     {
@@ -342,7 +343,7 @@ int main(int argc, char ** argv)
             cout << "5. Dmesg" << endl;
             cout << "6. Kmsg" << endl;
             cout << "7. Kmsg Continuous" << endl;
-            cout << "8. Kernel Version" << endl;
+            cout << "8. Miscellaneous" << endl;
             cout << "q. Quit" << endl << endl;
 
             do
@@ -386,6 +387,19 @@ int main(int argc, char ** argv)
             }
             else if(selection == '8')
             {
+                misc_options();
+
+                do
+                {
+                    cout << endl << "Please enter your selection: ";
+                    cin  >> misc_selection;
+
+                    if(misc_selection != '1')
+                    {
+                        cout << "Invalid selection, please try again by selecting the number of the option" << endl;
+                    }
+                }while(misc_selection != '1');
+
                 log_kernel_version();
             }
             else if(selection == 'q' || selection == 'Q')

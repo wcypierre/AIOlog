@@ -52,6 +52,7 @@ void log_kernel_version();
 
 void header();
 void help();
+void misc_options();
 
 // To be added
 void log_archive_win();

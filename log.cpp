@@ -295,6 +295,11 @@ void help()
     cin.get();
 }
 
+void misc_options()
+{
+    cout << "1. Kernel Version" << endl;
+}
+
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();
