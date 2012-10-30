@@ -343,7 +343,9 @@ int main(int argc, char ** argv)
             cout << "5. Dmesg" << endl;
             cout << "6. Kmsg" << endl;
             cout << "7. Kmsg Continuous" << endl;
-            cout << "8. Miscellaneous" << endl;
+            cout << "M. Miscellaneous" << endl;
+            cout << "S. Settings" << endl;
+            cout << "A. Advanced" << endl;
             cout << "Q. Quit" << endl << endl;
 
             do
@@ -351,11 +353,11 @@ int main(int argc, char ** argv)
                 cout << "Please enter your selection: ";
                 cin  >> selection;
 
-                if(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != 'q' && selection != 'Q')
+                if(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != 'm' && selection != 'M' && selection != 's' && selection != 'S' && selection != 'a' && selection != 'A' && selection != 'q' && selection != 'Q')
                 {
                     cout << "Invalid selection, please try again" << endl;
                 }
-            }while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != '8' && selection != 'q' && selection != 'Q');
+            }while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != 'm' && selection != 'M' && selection != 's' && selection != 'S' && selection != 'a' && selection != 'A' && selection != 'q' && selection != 'Q');
 
             if(selection == '1')
             {
@@ -385,7 +387,31 @@ int main(int argc, char ** argv)
             {
                 log_kmsg_continuous();
             }
-            else if(selection == '8')
+            else if(selection == 's' || selection == 'S')
+            {
+                settings_options();
+
+                do
+                {
+                    cout << endl << "Please enter your selection: ";
+                    cin  >> misc_selection;
+
+                    if(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B')
+                    {
+                        cout << "Invalid selection, please try again by selecting the number of the option" << endl;
+                    }
+                }while(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B');
+
+                if(misc_selection == '1')
+                {
+                    cout << "Before: " << device_id << endl;
+
+                    set_device_id(device_id);
+
+                    cout << "After: " << device_id << endl;
+                }
+            }
+            else if(selection == 'm' || selection == 'M')
             {
                 misc_options();
 
@@ -394,17 +420,33 @@ int main(int argc, char ** argv)
                     cout << endl << "Please enter your selection: ";
                     cin  >> misc_selection;
 
-                    if(misc_selection != '1' && misc_selection != '2')
+                    if(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B')
                     {
                         cout << "Invalid selection, please try again by selecting the number of the option" << endl;
                     }
-                }while(misc_selection != '1' && misc_selection != '2');
+                }while(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B');
 
                 if(misc_selection == '1')
                 {
                     log_kernel_version();
                 }
-                else if(misc_selection == '2')
+            }
+            else if(selection == 'a' || selection == 'A')
+            {
+                advanced_options();
+
+                do
+                {
+                    cout << endl << "Please enter your selection: ";
+                    cin  >> misc_selection;
+
+                    if(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B')
+                    {
+                        cout << "Invalid selection, please try again by selecting the number of the option" << endl;
+                    }
+                }while(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B');
+
+                if(misc_selection == '1')
                 {
                     log_logcat_radio();
                 }
