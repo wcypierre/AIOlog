@@ -41,6 +41,7 @@
     const char separator[] = "";
 #endif
 
+void log_essential();
 void log_all();
 void log_logcat();
 void log_logcat_continuous();
@@ -67,4 +68,6 @@ void log_archive_linux();
 void log_archive_mac();
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
+void log_logcat_clear();
+void log_dmesg_clear();
 #endif

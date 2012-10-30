@@ -25,12 +25,21 @@
 
 using namespace std;
 
+void log_essential()
+{
+    log_logcat();
+    log_dmesg();
+    log_last_kmsg();
+    log_kmsg();
+}
+
 void log_all()
 {
     log_logcat();
     log_dmesg();
     log_last_kmsg();
     log_kmsg();
+    log_kernel_version();
 }
 
 void log_logcat()
@@ -49,6 +58,8 @@ void log_logcat()
         strcpy(command, separator);
         strcat(command, "adb wait-for-device");
     }
+
+    system(command);
 
     if(separator_status == 0)
     {
@@ -424,3 +435,7 @@ void set_device_id(char * device_id)
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();
+void log_cpu_min_frequency();
+void log_cpu_max_frequency();
+void log_logcat_clear();
+void log_dmesg_clear();

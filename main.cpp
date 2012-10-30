@@ -336,7 +336,7 @@ int main(int argc, char ** argv)
             cout << endl;
 
             cout << "Functions: " << endl;
-            cout << "1. Log all(Logcat, last_kmsg, dmesg, kmsg)" << endl;
+            cout << "1. Log Essential(Logcat, last_kmsg, dmesg, kmsg)" << endl;
             cout << "2. Logcat" << endl;
             cout << "3. Logcat Continuous" << endl;
             cout << "4. Last_Kmsg" << endl;
@@ -361,7 +361,7 @@ int main(int argc, char ** argv)
 
             if(selection == '1')
             {
-                log_all();
+                log_essential();
             }
             else if(selection == '2')
             {
@@ -456,21 +456,21 @@ int main(int argc, char ** argv)
 
             }
 
-            if(selection != 'q' && selection != 'Q')
+            if(selection != 'q' && selection != 'Q' && misc_selection != 'b' && misc_selection != 'B')
             {
                 cout << endl << "Press enter to continue" << endl;
 
                 cin.get();
                 cin.get();
+            }
 
-                if(separator_status == 0)
-                {
-                    system("cls");
-                }
-                else
-                {
-                    system("clear");
-                }
+            if(separator_status == 0)
+            {
+                system("cls");
+            }
+            else
+            {
+                system("clear");
             }
         }while(selection != 'q' && selection != 'Q');
     }
