@@ -44,21 +44,27 @@
 void log_all();
 void log_logcat();
 void log_logcat_continuous();
-void log_logcat_radio();
 void log_last_kmsg();
 void log_dmesg();
 void log_kmsg();
 void log_kmsg_continuous();
-void log_kernel_version();
 
 void header();
 void help();
 
 void misc_options();
+void log_kernel_version();
+
+void settings_options();
+void set_device_id(char *);
+
+void advanced_options();
+void log_logcat_radio();
 
 // To be added
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();
-
+void log_cpu_min_frequency();
+void log_cpu_max_frequency();
 #endif
