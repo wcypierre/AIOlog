@@ -291,7 +291,7 @@ void header()
 {
     cout << "**********************************************************" << endl;
     cout << "*              AIOlog - All in One Android Logger        *" << endl;
-    cout << "*                         Version: 0.3                   *" << endl;
+    cout << "*                         Version: 0.4                   *" << endl;
     cout << "*                       By: wcypierre                    *" << endl;
     cout << "**********************************************************" << endl << endl;
 }
