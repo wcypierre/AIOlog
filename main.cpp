@@ -21,6 +21,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <cstdio>
 #include "log.h"
 
 using namespace std;
@@ -34,20 +35,9 @@ int main(int argc, char ** argv)
     string command;
     char misc_selection;
 
-    command.clear();
+    int device_availability;
 
-    if(os_type == 0)
-    {
-        command += separator;
-        command += "adb start-server";
-    }
-    else if(os_type == 1)
-    {
-        command += separator;
-        command += "adb start-server";
-    }
-
-    system(command.c_str());
+    adb_start_server();
 
     /*
     if(argc > 1)
@@ -206,16 +196,16 @@ int main(int argc, char ** argv)
 
     if(os_type == 0)
     {
-        command += separator;
-        command += "adb -d shell uname -a";
+        command.append(separator);
+        command.append("adb -d shell uname -a");
     }
     else if(os_type == 1)
     {
-        command += separator;
-        command += "adb -d shell uname -a";
+        command.append(separator);
+        command.append("adb -d shell uname -a");
     }
 
-    int device_availability = system(command.c_str());
+    device_availability = system(command.c_str());
 
     command.clear();
 
@@ -249,43 +239,28 @@ int main(int argc, char ** argv)
 
                     command.clear();
 
-                    if(os_type == 0)
-                    {
-                        command += separator;
-                        command +=  "adb devices";
-                    }
-                    else if(os_type == 1)
-                    {
-                        command += separator;
-                        command +=  "adb devices";
-                    }
-
-                    system(command.c_str());
-
-                    command.clear();
+                    adb_devices();
 
                     cout << endl;
 
                     cout << "Please enter your Device ID: ";
                     getline(cin, device_id);
 
-                    command.clear();
-
                     if(device_id[0] != '\0')
                     {
                         if(os_type == 0)
                         {
-                            command += separator;
-                            command += "adb -s ";
-                            command += device_id;
-                            command += " shell uname -a";
+                            command.append(separator);
+                            command.append("adb -s ");
+                            command.append(device_id);
+                            command.append(" shell uname -a");
                         }
                         else if(os_type == 1)
                         {
-                            command += separator;
-                            command += "adb -s ";
-                            command += device_id;
-                            command += " shell uname -a";
+                            command.append(separator);
+                            command.append("adb -s ");
+                            command.append(device_id);
+                            command.append(" shell uname -a");
                         }
 
                         device_status = system(command.c_str());
@@ -320,30 +295,30 @@ int main(int argc, char ** argv)
             {
                 if(device_id[0] == '\0')
                 {
-                    command += separator;
-                    command += "adb shell getprop ro.product.model";
+                    command.append(separator);
+                    command.append("adb shell getprop ro.product.model");
                 }
                 else
                 {
-                    command += separator;
-                    command += "adb -s ";
-                    command += device_id;
-                    command += " shell getprop ro.product.model";
+                    command.append(separator);
+                    command.append("adb -s ");
+                    command.append(device_id);
+                    command.append(" shell getprop ro.product.model");
                 }
             }
             else if(os_type == 1)
             {
                 if(device_id[0] == '\0')
                 {
-                    command += separator;
-                    command += "adb shell getprop ro.product.model";
+                    command.append(separator);
+                    command.append("adb shell getprop ro.product.model");
                 }
                 else
                 {
-                    command += separator;
-                    command += "adb -s ";
-                    command += device_id;
-                    command += " shell getprop ro.product.model";
+                    command.append(separator);
+                    command.append("adb -s ");
+                    command.append(device_id);
+                    command.append(" shell getprop ro.product.model");
                 }
             }
 
