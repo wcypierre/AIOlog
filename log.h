@@ -70,4 +70,5 @@ void log_cpu_min_frequency();
 void log_cpu_max_frequency();
 void log_logcat_clear();
 void log_dmesg_clear();
+void log_kmsg_clear();
 #endif
