@@ -289,11 +289,11 @@ void log_kmsg_continuous()
 
 void header()
 {
-    cout << "*************************************************" << endl;
-    cout << "*            AIOlog - All in One Logger         *" << endl;
-    cout << "*                  Version: 0.2                 *" << endl;
-    cout << "*              By: wcypierre - xda              *" << endl;
-    cout << "*************************************************" << endl << endl;
+    cout << "**********************************************************" << endl;
+    cout << "*              AIOlog - All in One Android Logger        *" << endl;
+    cout << "*                         Version: 0.3                   *" << endl;
+    cout << "*                       By: wcypierre                    *" << endl;
+    cout << "**********************************************************" << endl << endl;
 }
 
 void help()
