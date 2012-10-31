@@ -57,10 +57,12 @@ void misc_options();
 void log_kernel_version();
 
 void settings_options();
-void set_device_id(char *);
+void set_device_id(std::string &);
 
 void advanced_options();
 void log_logcat_radio();
+
+void wait_for_device();
 
 // To be added
 void log_archive_win();
@@ -71,4 +73,5 @@ void log_cpu_max_frequency();
 void log_logcat_clear();
 void log_dmesg_clear();
 void log_kmsg_clear();
+
 #endif

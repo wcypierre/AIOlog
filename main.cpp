@@ -19,7 +19,7 @@
  */
 
 #include <iostream>
-#include <cstring>
+#include <string>
 #include <cstdlib>
 #include "log.h"
 
@@ -28,32 +28,35 @@ using namespace std;
 int main(int argc, char ** argv)
 {
     char selection;
-    char device_id[25];
+    string device_id;
     device_id[0] = '\0';
 
-    char command[100];
+    string command;
     char misc_selection;
+
+    command.clear();
 
     if(separator_status == 0)
     {
-        strcpy(command, separator);
-        strcat(command, "adb start-server");
+        command += separator;
+        command += "adb start-server";
     }
     else if(separator_status == 1)
     {
-        strcpy(command, separator);
-        strcat(command, "adb start-server");
+        command += separator;
+        command += "adb start-server";
     }
 
-    system(command);
+    system(command.c_str());
 
+    /*
     if(argc > 1)
     {
         if(strcmp(argv[1], "--device-id") == 0 || strcmp(argv[1], "-id") == 0)
         {
             if(argv[2] != '\0')
             {
-                strcpy(device_id, argv[2]);
+                //strcpy(device_id, argv[2]);
             }
 
             if(strcmp(argv[2], "--all") == 0 || strcmp(argv[2], "-a") == 0)
@@ -197,19 +200,24 @@ int main(int argc, char ** argv)
             }
         }
     }
+    */
+
+    command.clear();
 
     if(separator_status == 0)
     {
-        strcpy(command, separator);
-        strcat(command, "adb -d shell uname -a");
+        command += separator;
+        command += "adb -d shell uname -a";
     }
     else if(separator_status == 1)
     {
-        strcpy(command, separator);
-        strcat(command, "adb -d shell uname -a");
+        command += separator;
+        command += "adb -d shell uname -a";
     }
 
-    int device_availability = system(command);
+    int device_availability = system(command.c_str());
+
+    command.clear();
 
     if(argc == 0)
     {
@@ -239,43 +247,51 @@ int main(int argc, char ** argv)
                 {
                     header();
 
+                    command.clear();
+
                     if(separator_status == 0)
                     {
-                        strcpy(command, separator);
-                        strcat(command, "adb devices");
+                        command += separator;
+                        command +=  "adb devices";
                     }
                     else if(separator_status == 1)
                     {
-                        strcpy(command, separator);
-                        strcat(command, "adb devices");
+                        command += separator;
+                        command +=  "adb devices";
                     }
 
-                    system(command);
+                    system(command.c_str());
+
+                    command.clear();
 
                     cout << endl;
 
                     cout << "Please enter your Device ID: ";
-                    cin.getline(device_id, 25);
+                    getline(cin, device_id);
+
+                    command.clear();
 
                     if(device_id[0] != '\0')
                     {
                         if(separator_status == 0)
                         {
-                            strcpy(command, separator);
-                            strcat(command, "adb -s ");
-                            strcat(command, device_id);
-                            strcat(command, " shell uname -a");
+                            command += separator;
+                            command += "adb -s ";
+                            command += device_id;
+                            command += " shell uname -a";
                         }
                         else if(separator_status == 1)
                         {
-                            strcpy(command, separator);
-                            strcat(command, "adb -s ");
-                            strcat(command, device_id);
-                            strcat(command, " shell uname -a");
+                            command += separator;
+                            command += "adb -s ";
+                            command += device_id;
+                            command += " shell uname -a";
                         }
 
-                        device_status = system(command);
+                        device_status = system(command.c_str());
                     }
+
+                    command.clear();
 
                     if(separator_status == 0)
                     {
@@ -298,38 +314,42 @@ int main(int argc, char ** argv)
 
             cout << "Device Model: ";
 
+            command.clear();
+
             if(separator_status == 0)
             {
                 if(device_id[0] == '\0')
                 {
-                    strcpy(command, separator);
-                    strcat(command, "adb shell getprop ro.product.model");
+                    command += separator;
+                    command += "adb shell getprop ro.product.model";
                 }
                 else
                 {
-                    strcpy(command, separator);
-                    strcat(command, "adb -s ");
-                    strcat(command, device_id);
-                    strcat(command, " shell getprop ro.product.model");
+                    command += separator;
+                    command += "adb -s ";
+                    command += device_id;
+                    command += " shell getprop ro.product.model";
                 }
             }
             else if(separator_status == 1)
             {
                 if(device_id[0] == '\0')
                 {
-                    strcpy(command, separator);
-                    strcat(command, "adb shell getprop ro.product.model");
+                    command += separator;
+                    command += "adb shell getprop ro.product.model";
                 }
                 else
                 {
-                    strcpy(command, separator);
-                    strcat(command, "adb -s ");
-                    strcat(command, device_id);
-                    strcat(command, " shell getprop ro.product.model");
+                    command += separator;
+                    command += "adb -s ";
+                    command += device_id;
+                    command += " shell getprop ro.product.model";
                 }
             }
 
-            system(command);
+            system(command.c_str());
+
+            command.clear();
 
             cout << endl;
 
