@@ -62,7 +62,9 @@ void set_device_id(std::string &);
 void advanced_options();
 void log_logcat_radio();
 
+void adb_start_server();
 void wait_for_device();
+void adb_devices();
 
 // To be added
 void log_archive_win();

@@ -365,6 +365,26 @@ void set_device_id(string & device_id)
     temp_device_id.clear();
 }
 
+void adb_start_server()
+{
+    string command;
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append("adb start-server");
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append("adb start-server");
+    }
+
+    system(command.c_str());
+
+    command.clear();
+}
+
 void wait_for_device()
 {
     string command;
@@ -378,6 +398,26 @@ void wait_for_device()
     {
         command.append(separator);
         command.append("adb wait-for-device");
+    }
+
+    system(command.c_str());
+
+    command.clear();
+}
+
+void adb_devices()
+{
+    string command;
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append("adb devices");
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append("adb devices");
     }
 
     system(command.c_str());
