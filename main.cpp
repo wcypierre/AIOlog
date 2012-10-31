@@ -49,8 +49,6 @@ int main(int argc, char ** argv)
 
     if(argc > 1)
     {
-        cout << argc << endl;
-
         if(strcmp(argv[1], "--device-id") == 0 || strcmp(argv[1], "-id") == 0)
         {
             if(argv[2] != '\0')
@@ -456,7 +454,7 @@ int main(int argc, char ** argv)
 
             }
 
-            if(selection != 'q' && selection != 'Q' && misc_selection != 'b' && misc_selection != 'B')
+            if(selection != 'q' && selection != 'Q')
             {
                 cout << endl << "Press enter to continue" << endl;
 
