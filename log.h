@@ -22,23 +22,23 @@
 #define LOG_H
 
 #ifdef _WIN64
-    const int separator_status = 0;
-    const char separator[] = "";
+    const int os_type = 0;
+    const std::string separator = "";
 #elif _WIN32
-    const int separator_status = 0;
-    const char separator[] = "";
+    const int os_type = 0;
+    const std::string separator = "";
 #elif __APPLE__
-    const int separator_status = 1;
-    const char separator[] = "./";
+    const int os_type = 1;
+    const std::string separator = "./";
 #elif __linux
-    const int separator_status = 1;
-    const char separator[] = "";
+    const int os_type = 1;
+    const std::string separator = "";
 #elif __unix
-    const int separator_status = 1;
-    const char separator[] = "";
+    const int os_type = 1;
+    const std::string separator = "";
 #elif __posix
-    const int separator_status = 1;
-    const char separator[] = "";
+    const int os_type = 1;
+    const std::string separator = "";
 #endif
 
 void log_essential();

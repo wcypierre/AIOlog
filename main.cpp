@@ -36,12 +36,12 @@ int main(int argc, char ** argv)
 
     command.clear();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command += separator;
         command += "adb start-server";
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command += separator;
         command += "adb start-server";
@@ -204,12 +204,12 @@ int main(int argc, char ** argv)
 
     command.clear();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command += separator;
         command += "adb -d shell uname -a";
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command += separator;
         command += "adb -d shell uname -a";
@@ -226,7 +226,7 @@ int main(int argc, char ** argv)
         return -1;
     }
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         system("cls");
     }
@@ -249,12 +249,12 @@ int main(int argc, char ** argv)
 
                     command.clear();
 
-                    if(separator_status == 0)
+                    if(os_type == 0)
                     {
                         command += separator;
                         command +=  "adb devices";
                     }
-                    else if(separator_status == 1)
+                    else if(os_type == 1)
                     {
                         command += separator;
                         command +=  "adb devices";
@@ -273,14 +273,14 @@ int main(int argc, char ** argv)
 
                     if(device_id[0] != '\0')
                     {
-                        if(separator_status == 0)
+                        if(os_type == 0)
                         {
                             command += separator;
                             command += "adb -s ";
                             command += device_id;
                             command += " shell uname -a";
                         }
-                        else if(separator_status == 1)
+                        else if(os_type == 1)
                         {
                             command += separator;
                             command += "adb -s ";
@@ -293,7 +293,7 @@ int main(int argc, char ** argv)
 
                     command.clear();
 
-                    if(separator_status == 0)
+                    if(os_type == 0)
                     {
                         system("cls");
                     }
@@ -316,7 +316,7 @@ int main(int argc, char ** argv)
 
             command.clear();
 
-            if(separator_status == 0)
+            if(os_type == 0)
             {
                 if(device_id[0] == '\0')
                 {
@@ -331,7 +331,7 @@ int main(int argc, char ** argv)
                     command += " shell getprop ro.product.model";
                 }
             }
-            else if(separator_status == 1)
+            else if(os_type == 1)
             {
                 if(device_id[0] == '\0')
                 {
@@ -482,7 +482,7 @@ int main(int argc, char ** argv)
                 cin.get();
             }
 
-            if(separator_status == 0)
+            if(os_type == 0)
             {
                 system("cls");
             }
@@ -493,7 +493,7 @@ int main(int argc, char ** argv)
         }while(selection != 'q' && selection != 'Q');
     }
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         system("cls");
     }

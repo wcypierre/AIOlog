@@ -50,12 +50,12 @@ void log_logcat()
 
     wait_for_device();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb logcat -d -v threadtime > logcat.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb logcat -d -v threadtime > logcat.txt");
@@ -64,6 +64,8 @@ void log_logcat()
     system(command.c_str());
 
     cout << "Logcat saved at logcat.txt" << endl;
+
+    command.clear();
 }
 
 void log_logcat_continuous()
@@ -77,12 +79,12 @@ void log_logcat_continuous()
     cout << "Logcat will be saved at logcat.txt" << endl
          << "Please press CTRL and C to close the program and stop the logging" << endl;
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb logcat -v threadtime > logcat.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb logcat -v threadtime > logcat.txt");
@@ -99,12 +101,12 @@ void log_logcat_radio()
 
     wait_for_device();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb logcat -d -v threadtime -b radio > logcat_radio.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb logcat -d -v threadtime -b radio > logcat_radio.txt");
@@ -113,6 +115,8 @@ void log_logcat_radio()
     system(command.c_str());
 
     cout << "Logcat for radio issues will be saved at logcat_radio.txt" << endl;
+
+    command.clear();
 }
 
 void log_last_kmsg()
@@ -123,12 +127,12 @@ void log_last_kmsg()
 
     wait_for_device();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb shell cat /proc/last_kmsg > last_kmsg.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb shell cat /proc/last_kmsg > last_kmsg.txt");
@@ -137,6 +141,8 @@ void log_last_kmsg()
     system(command.c_str());
 
     cout << "last_kmsg saved at last_kmsg.txt" << endl;
+
+    command.clear();
 }
 
 void log_dmesg()
@@ -147,12 +153,12 @@ void log_dmesg()
 
     wait_for_device();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb shell dmesg > dmesg.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb shell dmesg > dmesg.txt");
@@ -161,6 +167,8 @@ void log_dmesg()
     system(command.c_str());
 
     cout << "dmesg saved at dmesg.txt" << endl;
+
+    command.clear();
 }
 
 void log_kmsg()
@@ -171,12 +179,12 @@ void log_kmsg()
 
     wait_for_device();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb shell cat -f /proc/kmsg > kmsg.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb shell cat -f /proc/kmsg > kmsg.txt");
@@ -185,6 +193,8 @@ void log_kmsg()
     system(command.c_str());
 
     cout << "kmsg saved at kmsg.txt" << endl;
+
+    command.clear();
 }
 
 void log_kmsg_continuous()
@@ -198,12 +208,12 @@ void log_kmsg_continuous()
     cout << "kmsg will be saved at kmsg.txt" << endl;
     cout << "Please press CTRL and C to close the program and stop the logging" << endl;
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb shell cat /proc/kmsg > kmsg.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb shell cat /proc/kmsg > kmsg.txt");
@@ -261,12 +271,12 @@ void log_kernel_version()
 
     wait_for_device();
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb shell uname -a > kernel_version.txt");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb shell uname -a > kernel_version.txt");
@@ -275,6 +285,8 @@ void log_kernel_version()
     system(command.c_str());
 
     cout << "Kernel Version is saved at kernel_version.txt" << endl;
+
+    command.clear();
 }
 
 void set_device_id(string & device_id)
@@ -294,12 +306,12 @@ void set_device_id(string & device_id)
         cout << "* Set Device ID *" << endl;
         cout << "*****************" << endl;
 
-        if(separator_status == 0)
+        if(os_type == 0)
         {
             command.append(separator);
             command.append("adb devices");
         }
-        else if(separator_status == 1)
+        else if(os_type == 1)
         {
             command.append(separator);
             command.append("adb devices");
@@ -316,14 +328,14 @@ void set_device_id(string & device_id)
 
         if(temp_device_id[0] != '\0')
         {
-            if(separator_status == 0)
+            if(os_type == 0)
             {
                 command.append(separator);
                 command.append("adb -s ");
                 command.append(temp_device_id);
                 command.append(" shell uname -a");
             }
-            else if(separator_status == 1)
+            else if(os_type == 1)
             {
                 command.append(separator);
                 command.append("adb -s ");
@@ -334,7 +346,7 @@ void set_device_id(string & device_id)
             device_status = system(command.c_str());
         }
 
-        if(separator_status == 0)
+        if(os_type == 0)
         {
             system("cls");
         }
@@ -348,24 +360,29 @@ void set_device_id(string & device_id)
     {
         device_id.assign(temp_device_id);
     }
+
+    command.clear();
+    temp_device_id.clear();
 }
 
 void wait_for_device()
 {
     string command;
 
-    if(separator_status == 0)
+    if(os_type == 0)
     {
         command.append(separator);
         command.append("adb wait-for-device");
     }
-    else if(separator_status == 1)
+    else if(os_type == 1)
     {
         command.append(separator);
         command.append("adb wait-for-device");
     }
 
     system(command.c_str());
+
+    command.clear();
 }
 
 void log_archive_win();
