@@ -20,7 +20,6 @@
 
 #include <iostream>
 #include <string>
-#include <cstring>
 #include <cstdlib>
 #include <cstdio>
 #include "log.h"
@@ -41,6 +40,7 @@ int main(int argc, char ** argv)
     size_t found;
 
     char buffer[50];
+    string temp_buffer;
 
     adb_start_server();
 
@@ -222,7 +222,16 @@ int main(int argc, char ** argv)
 
     pclose(serial_no);
 
-    if(strcmp(buffer, "unknown") == 0)
+    temp_buffer.assign(buffer);
+
+    found = temp_buffer.find('\n');
+
+    if(found != string::npos)
+    {
+        temp_buffer.erase(int(found));
+    }
+
+    if(temp_buffer.compare("unknown") == 0)
     {
         device_availability = -1;
     }
@@ -230,14 +239,7 @@ int main(int argc, char ** argv)
     {
         device_availability = 1;
 
-        device_id.assign(buffer);
-
-        found = device_id.find('\n');
-
-        if(found != string::npos)
-        {
-            device_id.erase(int(found));
-        }
+        device_id.assign(temp_buffer);
     }
 
     if(argc == 0)
