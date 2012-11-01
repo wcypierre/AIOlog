@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <cstdlib>
 #include <cstdio>
 #include "log.h"
@@ -36,6 +37,10 @@ int main(int argc, char ** argv)
     char misc_selection;
 
     int device_availability;
+
+    size_t found;
+
+    char buffer[50];
 
     adb_start_server();
 
@@ -197,17 +202,43 @@ int main(int argc, char ** argv)
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -d shell uname -a");
+        command.append("adb get-serialno");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -d shell uname -a");
+        command.append("adb get-serialno");
     }
 
-    device_availability = system(command.c_str());
+    FILE * serial_no = popen(command.c_str(), "r");
 
-    command.clear();
+    if(serial_no != NULL)
+    {
+        while(fgets(buffer, sizeof(buffer), serial_no) != NULL)
+        {
+
+        }
+    }
+
+    pclose(serial_no);
+
+    if(strcmp(buffer, "unknown") == 0)
+    {
+        device_availability = -1;
+    }
+    else
+    {
+        device_availability = 1;
+
+        device_id.assign(buffer);
+
+        found = device_id.find('\n');
+
+        if(found != string::npos)
+        {
+            device_id.erase(int(found));
+        }
+    }
 
     if(argc == 0)
     {
@@ -261,6 +292,19 @@ int main(int argc, char ** argv)
                             command.append("adb -s ");
                             command.append(device_id);
                             command.append(" shell uname -a");
+                        }
+
+                        FILE * serial_no = popen("adb get-serialno", "r");
+
+                        if(serial_no != NULL)
+                        {
+                            while(fgets(buffer, sizeof(buffer), serial_no) != NULL)
+                            {
+                                while(fgets(buffer, sizeof(buffer), serial_no) != NULL)
+                                {
+
+                                }
+                            }
                         }
 
                         device_status = system(command.c_str());
