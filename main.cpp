@@ -20,16 +20,19 @@
 
 #include <iostream>
 #include <string>
+#include <cstring>
 #include <cstdlib>
 #include <cstdio>
 #include "log.h"
 
 using namespace std;
 
+string device_id;
+
 int main(int argc, char ** argv)
 {
     char selection;
-    string device_id;
+
     device_id[0] = '\0';
 
     string command;
@@ -279,24 +282,26 @@ int main(int argc, char ** argv)
                     cout << "Please enter your Device ID: ";
                     getline(cin, device_id);
 
+                    command.clear();
+
+                    if(os_type == 0)
+                    {
+                        command.append(separator);
+                        command.append("adb -s ");
+                        command.append(device_id);
+                        command.append(" get-serialno");
+                    }
+                    else if(os_type == 1)
+                    {
+                        command.append(separator);
+                        command.append("adb -s ");
+                        command.append(device_id);
+                        command.append(" get-serialno");
+                    }
+
                     if(device_id[0] != '\0')
                     {
-                        if(os_type == 0)
-                        {
-                            command.append(separator);
-                            command.append("adb -s ");
-                            command.append(device_id);
-                            command.append(" shell uname -a");
-                        }
-                        else if(os_type == 1)
-                        {
-                            command.append(separator);
-                            command.append("adb -s ");
-                            command.append(device_id);
-                            command.append(" shell uname -a");
-                        }
-
-                        FILE * serial_no = popen("adb get-serialno", "r");
+                        FILE * serial_no = popen(command.c_str(), "r");
 
                         if(serial_no != NULL)
                         {
@@ -307,9 +312,25 @@ int main(int argc, char ** argv)
 
                                 }
                             }
-                        }
 
-                        device_status = system(command.c_str());
+                            temp_buffer.assign(buffer);
+
+                            found = temp_buffer.find('\n');
+
+                            if(found != string::npos)
+                            {
+                                temp_buffer.erase(int(found));
+                            }
+
+                            if(temp_buffer.compare("unknown") == 0)
+                            {
+                                device_status = -1;
+                            }
+                            else
+                            {
+                                device_status = 1;
+                            }
+                        }
                     }
 
                     command.clear();
