@@ -518,10 +518,13 @@ int main(int argc, char ** argv)
 
             if(selection != 'q' && selection != 'Q')
             {
-                cout << endl << "Press enter to continue" << endl;
+                if(selection != 's' && selection != 'S' && selection != 'm' && selection != 'M' && selection != 'a' && selection != 'A')
+                {
+                    cout << endl << "Press enter to continue" << endl;
 
-                cin.get();
-                cin.get();
+                    cin.get();
+                    cin.get();
+                }
             }
 
             if(os_type == 0)
