@@ -63,6 +63,8 @@ void set_device_id(std::string &);
 
 void advanced_options();
 void log_logcat_radio();
+void log_logcat_clear();
+void log_dmesg_clear();
 
 void adb_start_server();
 void wait_for_device();
@@ -74,8 +76,11 @@ void log_archive_linux();
 void log_archive_mac();
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
-void log_logcat_clear();
-void log_dmesg_clear();
-void log_kmsg_clear();
+void log_tegra3_cpu_variant();
+void log_push();
+void html_logcat();
+void html_dmesg();
+void html_kmsg();
+void html_last_kmsg();
 
 #endif

@@ -53,12 +53,16 @@ void log_logcat()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb logcat -d -v threadtime > logcat.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -d -v threadtime > logcat.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb logcat -d -v threadtime > logcat.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -d -v threadtime > logcat.txt");
     }
 
     system(command.c_str());
@@ -82,12 +86,16 @@ void log_logcat_continuous()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb logcat -v threadtime > logcat.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -v threadtime > logcat.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb logcat -v threadtime > logcat.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -v threadtime > logcat.txt");
     }
 
     system(command.c_str());
@@ -104,17 +112,81 @@ void log_logcat_radio()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb logcat -d -v threadtime -b radio > logcat_radio.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -d -v threadtime -b radio > logcat_radio.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb logcat -d -v threadtime -b radio > logcat_radio.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -d -v threadtime -b radio > logcat_radio.txt");
     }
 
     system(command.c_str());
 
     cout << "Logcat for radio issues will be saved at logcat_radio.txt" << endl;
+
+    command.clear();
+}
+
+void log_logcat_clear()
+{
+    string command;
+
+    cout << endl;
+
+    wait_for_device();
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -c");
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" logcat -c");
+    }
+
+    system(command.c_str());
+
+    cout << "Logcat is cleared" << endl;
+
+    command.clear();
+}
+
+void log_dmesg_clear()
+{
+    string command;
+
+    cout << endl;
+
+    wait_for_device();
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell dmesg -c > .tmp");
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell dmesg -c > .tmp");
+    }
+
+    system(command.c_str());
+
+    cout << "Dmesg is cleared" << endl;
 
     command.clear();
 }
@@ -130,12 +202,16 @@ void log_last_kmsg()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb shell cat /proc/last_kmsg > last_kmsg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell cat /proc/last_kmsg > last_kmsg.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb shell cat /proc/last_kmsg > last_kmsg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell cat /proc/last_kmsg > last_kmsg.txt");
     }
 
     system(command.c_str());
@@ -156,12 +232,16 @@ void log_dmesg()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb shell dmesg > dmesg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell dmesg > dmesg.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb shell dmesg > dmesg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell dmesg > dmesg.txt");
     }
 
     system(command.c_str());
@@ -182,12 +262,16 @@ void log_kmsg()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb shell cat -f /proc/kmsg > kmsg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell cat -f /proc/kmsg > kmsg.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb shell cat -f /proc/kmsg > kmsg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell cat -f /proc/kmsg > kmsg.txt");
     }
 
     system(command.c_str());
@@ -211,12 +295,16 @@ void log_kmsg_continuous()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb shell cat /proc/kmsg > kmsg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell cat /proc/kmsg > kmsg.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb shell cat /proc/kmsg > kmsg.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell cat /proc/kmsg > kmsg.txt");
     }
 
     system(command.c_str());
@@ -260,6 +348,8 @@ void settings_options()
 void advanced_options()
 {
     cout << "1. Logcat Radio" << endl;
+    cout << "2. Logcat Clear" << endl;
+    cout << "3. Dmesg Clear" << endl;
     cout << "B. Back to Main Menu" << endl;
 }
 
@@ -274,12 +364,16 @@ void log_kernel_version()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb shell uname -a > kernel_version.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell uname -a > kernel_version.txt");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb shell uname -a > kernel_version.txt");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell uname -a > kernel_version.txt");
     }
 
     system(command.c_str());
@@ -392,12 +486,16 @@ void wait_for_device()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb wait-for-device");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" wait-for-device");
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb wait-for-device");
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" wait-for-device");
     }
 
     system(command.c_str());
@@ -425,10 +523,97 @@ void adb_devices()
     command.clear();
 }
 
+// To do
+void log_tegra3_cpu_variant()
+{
+    //[7]: cpu_speedo_id = 4 - AP33
+    // 7 - Threshold ID, cpu_speedo_id = 4, soc_speedo_id = 1 [refer to [7] above the cpu_speedo_id check]
+
+    // Tegra3: CPU Speedo ID 4<cpu_speedo_id>, Soc Speedo ID 1<soc_speedo_id>
+    // Tegra Revision: A03 SKU: 0x81 CPU Process: 2 Core Process: 2
+    // cpu_dvfs->process_id: 2<possible core_process_id>
+    // core_nominal_mv_index: 7<possible threshold_index>
+
+    // Reference: https://github.com/franciscofranco/One_X-2.6.39.4/blob/master/arch/arm/mach-tegra/tegra3_speedo.c
+
+    int soc_speedo_id;
+    int cpu_speedo_id;
+    int cpu_process_id;
+    int core_process_id;
+    int threshold_index;
+
+    char tegra3_revision[4];
+    char tegra3_sku[5];
+
+    if(threshold_index == 12)
+    {
+		if(cpu_process_id <= 2)
+		{
+		    cpu_speedo_id = 9;
+		}
+		else if(cpu_process_id >= 3 && cpu_process_id < 6)
+        {
+            cpu_speedo_id = 10;
+        }
+	}
+
+    if(cpu_speedo_id == 0)
+    {
+
+    }
+    else if(cpu_speedo_id == 1)
+    {
+
+    }
+    else if(cpu_speedo_id == 2)
+    {
+
+    }
+    else if(cpu_speedo_id == 3)
+    {
+
+    }
+    else if(cpu_speedo_id == 4)
+    {
+
+    }
+    else if(cpu_speedo_id == 5)
+    {
+
+    }
+    else if(cpu_speedo_id == 6)
+    {
+
+    }
+    else if(cpu_speedo_id == 7)
+    {
+
+    }
+    else if(cpu_speedo_id == 8)
+    {
+
+    }
+    else if(cpu_speedo_id == 9)
+    {
+
+    }
+    else if(cpu_speedo_id == 10)
+    {
+
+    }
+    else if(cpu_speedo_id == 11)
+    {
+
+    }
+}
+
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
-void log_logcat_clear();
-void log_dmesg_clear();
+void log_push();
+void html_logcat();
+void html_dmesg();
+void html_kmsg();
+void html_last_kmsg();

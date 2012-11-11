@@ -464,11 +464,9 @@ int main(int argc, char ** argv)
 
                 if(misc_selection == '1')
                 {
-                    cout << "Before: " << device_id << endl;
+                    cout << "Current Device ID: " << device_id << endl << endl;
 
                     set_device_id(device_id);
-
-                    cout << "After: " << device_id << endl;
                 }
             }
             else if(selection == 'm' || selection == 'M')
@@ -500,15 +498,23 @@ int main(int argc, char ** argv)
                     cout << endl << "Please enter your selection: ";
                     cin  >> misc_selection;
 
-                    if(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B')
+                    if(misc_selection != '1' && misc_selection != '2' && misc_selection != '3' && misc_selection != 'b' && misc_selection != 'B')
                     {
                         cout << "Invalid selection, please try again by selecting the number of the option" << endl;
                     }
-                }while(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B');
+                }while(misc_selection != '1' && misc_selection != '2' && misc_selection != '3' && misc_selection != 'b' && misc_selection != 'B');
 
                 if(misc_selection == '1')
                 {
                     log_logcat_radio();
+                }
+                else if(misc_selection == '2')
+                {
+                    log_logcat_clear();
+                }
+                else if(misc_selection == '3')
+                {
+                    log_dmesg_clear();
                 }
             }
             else if(selection == 'q' || selection == 'Q')
