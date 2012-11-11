@@ -25,6 +25,7 @@
 
 using namespace std;
 
+
 void log_essential()
 {
     log_logcat();
