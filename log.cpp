@@ -25,7 +25,6 @@
 
 using namespace std;
 
-
 void log_essential()
 {
     log_logcat();
@@ -315,7 +314,7 @@ void header()
 {
     cout << "**********************************************************" << endl;
     cout << "*              AIOlog - All in One Android Logger        *" << endl;
-    cout << "*                         Version: 0.4                   *" << endl;
+    cout << "*                         Version: 0.5                   *" << endl;
     cout << "*                       By: wcypierre                    *" << endl;
     cout << "**********************************************************" << endl << endl;
 }

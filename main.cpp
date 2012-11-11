@@ -47,7 +47,6 @@ int main(int argc, char ** argv)
 
     adb_start_server();
 
-
     /*
     if(argc > 1)
     {
