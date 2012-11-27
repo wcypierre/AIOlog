@@ -709,11 +709,17 @@ void log_tegra3_cpu_variant()
     }
 }
 
+void log_logcat_option();
+void log_dmesg_option();
+void log_last_kmsg_option();
+void log_kmsg_option();
+void log_recovery_logcat();
 void log_archive_win();
 void log_archive_linux();
 void log_archive_mac();
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
+void log_recovery();
 void html_logcat();
 void html_dmesg();
 void html_kmsg();
