@@ -69,6 +69,11 @@ void log_logcat()
 
     cout << "Logcat saved at logcat.txt" << endl;
 
+    dir_create();
+    log_push("logcat.txt", "/mnt/sdcard/logcat.txt");
+    log_push("logcat.txt", "/mnt/sdcard/.aiolog/logcat.txt");
+    log_push("logcat.txt", "/mnt/sdcard/aiolog/logcat.txt");
+
     command.clear();
 }
 
@@ -127,6 +132,11 @@ void log_logcat_radio()
     system(command.c_str());
 
     cout << "Logcat for radio issues will be saved at logcat_radio.txt" << endl;
+
+    dir_create();
+    log_push("logcat_radio.txt", "/mnt/sdcard/logcat_radio.txt");
+    log_push("logcat_radio.txt", "/mnt/sdcard/.aiolog/logcat_radio.txt");
+    log_push("logcat_radio.txt", "/mnt/sdcard/aiolog/logcat_radio.txt");
 
     command.clear();
 }
@@ -218,6 +228,11 @@ void log_last_kmsg()
 
     cout << "last_kmsg saved at last_kmsg.txt" << endl;
 
+    dir_create();
+    log_push("last_kmsg.txt", "/mnt/sdcard/last_kmsg.txt");
+    log_push("last_kmsg.txt", "/mnt/sdcard/.aiolog/last_kmsg.txt");
+    log_push("last_kmsg.txt", "/mnt/sdcard/aiolog/last_kmsg.txt");
+
     command.clear();
 }
 
@@ -247,6 +262,11 @@ void log_dmesg()
     system(command.c_str());
 
     cout << "dmesg saved at dmesg.txt" << endl;
+
+    dir_create();
+    log_push("dmesg.txt", "/mnt/sdcard/dmesg.txt");
+    log_push("dmesg.txt", "/mnt/sdcard/.aiolog/dmesg.txt");
+    log_push("dmesg.txt", "/mnt/sdcard/aiolog/dmesg.txt");
 
     command.clear();
 }
@@ -278,6 +298,11 @@ void log_kmsg()
 
     cout << "kmsg saved at kmsg.txt" << endl;
 
+    dir_create();
+    log_push("kmsg.txt", "/mnt/sdcard/kmsg.txt");
+    log_push("kmsg.txt", "/mnt/sdcard/.aiolog/kmsg.txt");
+    log_push("kmsg.txt", "/mnt/sdcard/aiolog/kmsg.txt");
+
     command.clear();
 }
 
@@ -305,6 +330,83 @@ void log_kmsg_continuous()
         command.append("adb -s ");
         command.append(device_id);
         command.append(" shell cat /proc/kmsg > kmsg.txt");
+    }
+
+    system(command.c_str());
+}
+
+void log_push(std::string from, std::string to)
+{
+    string command;
+
+    wait_for_device();
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" push ");
+        command.append(from);
+        command.append(" ");
+        command.append(to);
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" push ");
+        command.append(from);
+        command.append(" ");
+        command.append(to);
+    }
+
+    system(command.c_str());
+
+    command.clear();
+}
+
+void dir_create()
+{
+    string command;
+
+    cout << endl;
+
+    wait_for_device();
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell mkdir -p /mnt/sdcard/aiolog");
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell mkdir -p /mnt/sdcard/aiolog");
+    }
+
+    system(command.c_str());
+
+    command.clear();
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell mkdir -p /mnt/sdcard/.aiolog");
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append("adb -s ");
+        command.append(device_id);
+        command.append(" shell mkdir -p /mnt/sdcard/.aiolog");
     }
 
     system(command.c_str());
@@ -612,7 +714,6 @@ void log_archive_linux();
 void log_archive_mac();
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
-void log_push();
 void html_logcat();
 void html_dmesg();
 void html_kmsg();

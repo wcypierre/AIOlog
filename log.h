@@ -52,6 +52,9 @@ void log_dmesg();
 void log_kmsg();
 void log_kmsg_continuous();
 
+void log_push(std::string, std::string);
+void dir_create();
+
 void header();
 void help();
 
@@ -77,7 +80,6 @@ void log_archive_mac();
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
 void log_tegra3_cpu_variant();
-void log_push();
 void html_logcat();
 void html_dmesg();
 void html_kmsg();
