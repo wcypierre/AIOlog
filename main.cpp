@@ -25,7 +25,6 @@
 #include <cstdio>
 #include "log.h"
 
-
 using namespace std;
 
 string device_id;

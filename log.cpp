@@ -24,7 +24,6 @@
 #include <cstdio>
 #include "log.h"
 
-
 using namespace std;
 
 void log_essential()
@@ -510,7 +509,7 @@ void header()
 {
     cout << "**********************************************************" << endl;
     cout << "*              AIOlog - All in One Android Logger        *" << endl;
-    cout << "*                         Version: 0.5                   *" << endl;
+    cout << "*                         Version: 0.6                   *" << endl;
     cout << "*                       By: wcypierre                    *" << endl;
     cout << "**********************************************************" << endl << endl;
 }

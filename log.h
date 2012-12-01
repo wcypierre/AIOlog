@@ -21,7 +21,6 @@
 #ifndef LOG_H // header guard
 #define LOG_H
 
-
 extern std::string device_id;
 
 #ifdef _WIN64
