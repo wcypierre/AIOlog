@@ -24,6 +24,7 @@
 #include <cstdio>
 #include "log.h"
 
+
 using namespace std;
 
 void log_essential()
