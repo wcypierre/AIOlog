@@ -40,6 +40,8 @@ int main(int argc, char ** argv)
 
     int device_availability;
 
+    int device_status;
+
     size_t found;
 
     char buffer[50];
@@ -267,7 +269,7 @@ int main(int argc, char ** argv)
         {
             if(device_availability == -1)
             {
-                int device_status = -1;
+                device_status = -1;
 
                 do
                 {
@@ -281,6 +283,40 @@ int main(int argc, char ** argv)
 
                     cout << "Please enter your Device ID: ";
                     getline(cin, device_id);
+
+                    FILE * serial_no = popen("adb get-serialno", "r");
+
+                    if(serial_no != NULL)
+                    {
+                        while(fgets(buffer, sizeof(buffer), serial_no) != NULL)
+                        {
+                            while(fgets(buffer, sizeof(buffer), serial_no) != NULL)
+                            {
+
+                            }
+                        }
+
+                        temp_buffer.assign(buffer);
+
+                        found = temp_buffer.find('\n');
+
+                        if(found != string::npos)
+                        {
+                            temp_buffer.erase(int(found));
+                        }
+
+                        if(temp_buffer.compare("unknown") == 0)
+                        {
+                            device_status = -1;
+                        }
+                        else
+                        {
+                            device_id = temp_buffer;
+                            device_status = 1;
+                        }
+                    }
+
+                    pclose(serial_no);
 
                     command.clear();
 
@@ -330,12 +366,16 @@ int main(int argc, char ** argv)
                             {
                                 device_status = 1;
                             }
+
+                            cout << "Device ID: " << device_id << endl;
                         }
+
+                        pclose(serial_no);
                     }
 
                     command.clear();
 
-                    if(os_type == 0)
+                    /*if(os_type == 0)
                     {
                         system("cls");
                     }
@@ -343,6 +383,7 @@ int main(int argc, char ** argv)
                     {
                         system("clear");
                     }
+                    */
                 }while(device_status == -1);
 
                 device_availability = 1; // Disable reprompt of Device ID after the Device ID has been entered
@@ -478,15 +519,26 @@ int main(int argc, char ** argv)
                     cout << endl << "Please enter your selection: ";
                     cin  >> misc_selection;
 
-                    if(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B')
+                    if(misc_selection != '1' && misc_selection != '2' && misc_selection != 'b' && misc_selection != 'B')
                     {
                         cout << "Invalid selection, please try again by selecting the number of the option" << endl;
                     }
-                }while(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B');
+                }while(misc_selection != '1' && misc_selection != '2' && misc_selection != 'b' && misc_selection != 'B');
+
+                cout << endl;
 
                 if(misc_selection == '1')
                 {
                     log_kernel_version();
+                }
+                else if(misc_selection == '2')
+                {
+                    log_cid_version();
+
+                    cout << "Press enter to continue" << endl;
+
+                    cin.get();
+                    cin.get();
                 }
             }
             else if(selection == 'a' || selection == 'A')

@@ -21,6 +21,7 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <cstdio>
 #include "log.h"
 
 using namespace std;
@@ -412,6 +413,98 @@ void dir_create()
     system(command.c_str());
 }
 
+void log_archive_prepare(std::string option)
+{
+    string archive_filename;
+    string input_filename;
+
+    if(option.compare("logcat") == 0)
+    {
+        archive_filename = "logcat.tar";
+        input_filename = "logcat.txt";
+    }
+    else if(option.compare("last_kmsg") == 0)
+    {
+        archive_filename = "last_kmsg.tar";
+        input_filename = "last_kmsg.txt";
+    }
+    else if(option.compare("dmesg") == 0)
+    {
+        archive_filename = "dmesg.tar";
+        input_filename = "dmesg.txt";
+    }
+    else if(option.compare("kmsg") == 0)
+    {
+        archive_filename = "kmsg.tar";
+        input_filename = "kmsg.txt";
+    }
+    else if(option.compare("log_essential") == 0)
+    {
+        archive_filename = "log_essential.tar";
+        input_filename = "logcat.txt kmsg.txt dmesg.txt last_kmsg.txt";
+    }
+    else if(option.compare("log_all") == 0)
+    {
+        archive_filename = "log_all.tar";
+        //input_filename = "logcat.txt kmsg.txt dmesg.txt last_kmsg.txt"; to be added
+    }
+    else if(option.compare("last_kmsg") == 0)
+    {
+        archive_filename = "last_kmsg.tar";
+        input_filename = "last_kmsg.txt";
+    }
+    else if(option.compare("logcat_radio") == 0)
+    {
+        archive_filename = "logcat_radio.tar";
+        input_filename = "logcat_radio.txt";
+    }
+    else if(option.compare("kernel_version") == 0)
+    {
+        archive_filename = "kernel_version.tar";
+        input_filename = "kernel_version.txt";
+    }
+
+    if(os_type == 0)
+    {
+        // log_archive_win(archive_filename, input_filename);
+    }
+    else if(os_type == 1)
+    {
+        log_archive_linux(archive_filename, input_filename);
+    }
+}
+
+void log_archive_linux(std::string archive_filename, std::string input_filename)
+{
+    string command;
+    string archive_command;
+
+    string remote_root_filename = "/mnt/sdcard/";
+    string remote_aiolog_filename = "/mnt/sdcard/";
+    string remote_dot_aiolog_filename = "/mnt/sdcard/";
+
+    cout << endl;
+
+    remote_root_filename.append(archive_filename);
+
+    remote_aiolog_filename.append("aiolog/");
+    remote_aiolog_filename.append(archive_filename);
+
+    remote_aiolog_filename.append(".aiolog/");
+    remote_aiolog_filename.append(archive_filename);
+
+    archive_command.append("tar cvf ");
+    archive_command.append(archive_filename);
+    archive_command.append(" ");
+    archive_command.append(input_filename);
+
+    system(archive_command.c_str());
+
+    log_push(archive_filename, remote_root_filename);
+    log_push(archive_filename, remote_aiolog_filename);
+    log_push(archive_filename, remote_dot_aiolog_filename);
+}
+
 void header()
 {
     cout << "**********************************************************" << endl;
@@ -438,6 +531,7 @@ void help()
 void misc_options()
 {
     cout << "1. Kernel Version" << endl;
+    cout << "2. CID Version" << endl;
     cout << "B. Back to Main Menu" << endl;
 }
 
@@ -483,6 +577,59 @@ void log_kernel_version()
     cout << "Kernel Version is saved at kernel_version.txt" << endl;
 
     command.clear();
+}
+
+void log_cid_version()
+{
+    string command;
+
+    string temp_buffer;
+    char buffer[50];
+
+    size_t found;
+
+    command.append("adb -s ");
+    command.append(device_id);
+    command.append(" shell getprop ro.cid");
+
+    FILE * cid = popen(command.c_str(), "r");
+
+    cout << endl;
+
+    if(cid != NULL)
+    {
+        while(fgets(buffer, sizeof(buffer), cid) != NULL)
+        {
+            while(fgets(buffer, sizeof(buffer), cid) != NULL)
+            {
+
+            }
+        }
+
+        temp_buffer.assign(buffer);
+
+        found = temp_buffer.find('\n');
+
+        if(found != string::npos)
+        {
+            temp_buffer.erase(int(found));
+        }
+
+        if(temp_buffer.compare("error: device not found") == 0)
+        {
+            cout << "Device Not found" << endl << endl;
+        }
+        else if(temp_buffer.compare("") == 0)
+        {
+            cout << "AIOlog [Error]: Invalid CID location, please contact me via xda or my email @ wcypierre@gmail.com and provide me with your Device name" << endl << endl;
+        }
+        else
+        {
+            cout << "CID Version: " << temp_buffer << endl << endl;
+        }
+    }
+
+    pclose(cid);
 }
 
 void set_device_id(string & device_id)
@@ -714,12 +861,14 @@ void log_dmesg_option();
 void log_last_kmsg_option();
 void log_kmsg_option();
 void log_recovery_logcat();
+
 void log_archive_win();
-void log_archive_linux();
 void log_archive_mac();
+
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
 void log_recovery();
+
 void html_logcat();
 void html_dmesg();
 void html_kmsg();
