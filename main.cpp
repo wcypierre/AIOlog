@@ -375,7 +375,7 @@ int main(int argc, char ** argv)
 
                     command.clear();
 
-                    /*if(os_type == 0)
+                    if(os_type == 0)
                     {
                         system("cls");
                     }
@@ -383,7 +383,6 @@ int main(int argc, char ** argv)
                     {
                         system("clear");
                     }
-                    */
                 }while(device_status == -1);
 
                 device_availability = 1; // Disable reprompt of Device ID after the Device ID has been entered
