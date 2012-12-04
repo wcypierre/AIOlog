@@ -23,6 +23,7 @@
 
 extern std::string device_id;
 
+
 #ifdef _WIN64
     const int os_type = 0;
     const std::string separator = "";

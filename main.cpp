@@ -27,6 +27,7 @@
 
 using namespace std;
 
+
 string device_id;
 
 int main(int argc, char ** argv)
