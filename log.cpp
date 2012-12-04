@@ -32,6 +32,8 @@ void log_essential()
     log_dmesg();
     log_last_kmsg();
     log_kmsg();
+
+    log_archive("log_essential");
 }
 
 void log_all()
@@ -74,6 +76,8 @@ void log_logcat()
     log_push("logcat.txt", "/mnt/sdcard/logcat.txt");
     log_push("logcat.txt", "/mnt/sdcard/.aiolog/logcat.txt");
     log_push("logcat.txt", "/mnt/sdcard/aiolog/logcat.txt");
+
+    log_archive("logcat");
 
     command.clear();
 }
@@ -138,6 +142,8 @@ void log_logcat_radio()
     log_push("logcat_radio.txt", "/mnt/sdcard/logcat_radio.txt");
     log_push("logcat_radio.txt", "/mnt/sdcard/.aiolog/logcat_radio.txt");
     log_push("logcat_radio.txt", "/mnt/sdcard/aiolog/logcat_radio.txt");
+
+    log_archive("logcat_radio");
 
     command.clear();
 }
@@ -234,6 +240,8 @@ void log_last_kmsg()
     log_push("last_kmsg.txt", "/mnt/sdcard/.aiolog/last_kmsg.txt");
     log_push("last_kmsg.txt", "/mnt/sdcard/aiolog/last_kmsg.txt");
 
+    log_archive("last_kmsg");
+
     command.clear();
 }
 
@@ -269,6 +277,8 @@ void log_dmesg()
     log_push("dmesg.txt", "/mnt/sdcard/.aiolog/dmesg.txt");
     log_push("dmesg.txt", "/mnt/sdcard/aiolog/dmesg.txt");
 
+    log_archive("dmesg");
+
     command.clear();
 }
 
@@ -303,6 +313,8 @@ void log_kmsg()
     log_push("kmsg.txt", "/mnt/sdcard/kmsg.txt");
     log_push("kmsg.txt", "/mnt/sdcard/.aiolog/kmsg.txt");
     log_push("kmsg.txt", "/mnt/sdcard/aiolog/kmsg.txt");
+
+    log_archive("kmsg");
 
     command.clear();
 }
@@ -413,63 +425,67 @@ void dir_create()
     system(command.c_str());
 }
 
-void log_archive_prepare(std::string option)
+void log_archive(std::string option)
 {
     string archive_filename;
     string input_filename;
 
     if(option.compare("logcat") == 0)
     {
-        archive_filename = "logcat.tar";
+        archive_filename = "logcat";
         input_filename = "logcat.txt";
     }
     else if(option.compare("last_kmsg") == 0)
     {
-        archive_filename = "last_kmsg.tar";
+        archive_filename = "last_kmsg";
         input_filename = "last_kmsg.txt";
     }
     else if(option.compare("dmesg") == 0)
     {
-        archive_filename = "dmesg.tar";
+        archive_filename = "dmesg";
         input_filename = "dmesg.txt";
     }
     else if(option.compare("kmsg") == 0)
     {
-        archive_filename = "kmsg.tar";
+        archive_filename = "kmsg";
         input_filename = "kmsg.txt";
     }
     else if(option.compare("log_essential") == 0)
     {
-        archive_filename = "log_essential.tar";
+        archive_filename = "log_essential";
         input_filename = "logcat.txt kmsg.txt dmesg.txt last_kmsg.txt";
     }
     else if(option.compare("log_all") == 0)
     {
-        archive_filename = "log_all.tar";
+        archive_filename = "log_all";
         //input_filename = "logcat.txt kmsg.txt dmesg.txt last_kmsg.txt"; to be added
     }
     else if(option.compare("last_kmsg") == 0)
     {
-        archive_filename = "last_kmsg.tar";
+        archive_filename = "last_kmsg";
         input_filename = "last_kmsg.txt";
     }
     else if(option.compare("logcat_radio") == 0)
     {
-        archive_filename = "logcat_radio.tar";
+        archive_filename = "logcat_radio";
         input_filename = "logcat_radio.txt";
     }
     else if(option.compare("kernel_version") == 0)
     {
-        archive_filename = "kernel_version.tar";
+        archive_filename = "kernel_version";
         input_filename = "kernel_version.txt";
     }
 
     if(os_type == 0)
     {
-        // log_archive_win(archive_filename, input_filename);
+    	archive_filename.append(".zip");
+
+        log_archive_win(archive_filename, input_filename);
     }
     else if(os_type == 1)
     {
+    	archive_filename.append(".tar");
+
         log_archive_linux(archive_filename, input_filename);
     }
 }
@@ -497,6 +513,38 @@ void log_archive_linux(std::string archive_filename, std::string input_filename)
     archive_command.append(archive_filename);
     archive_command.append(" ");
     archive_command.append(input_filename);
+
+    system(archive_command.c_str());
+
+    log_push(archive_filename, remote_root_filename);
+    log_push(archive_filename, remote_aiolog_filename);
+    log_push(archive_filename, remote_dot_aiolog_filename);
+}
+
+void log_archive_win(std::string archive_filename, std::string input_filename)
+{
+    string command;
+    string archive_command;
+
+    string remote_root_filename = "/mnt/sdcard/";
+    string remote_aiolog_filename = "/mnt/sdcard/";
+    string remote_dot_aiolog_filename = "/mnt/sdcard/";
+
+    cout << endl;
+
+    remote_root_filename.append(archive_filename);
+
+    remote_aiolog_filename.append("aiolog/");
+    remote_aiolog_filename.append(archive_filename);
+
+    remote_aiolog_filename.append(".aiolog/");
+    remote_aiolog_filename.append(archive_filename);
+
+    archive_command.append("7za a -tzip ");
+    archive_command.append(archive_filename);
+    archive_command.append(" ");
+    archive_command.append(input_filename);
+    archive_command.append(" -mmt -aot -y");
 
     system(archive_command.c_str());
 
@@ -575,6 +623,8 @@ void log_kernel_version()
     system(command.c_str());
 
     cout << "Kernel Version is saved at kernel_version.txt" << endl;
+
+    log_archive("kernel_version");
 
     command.clear();
 }
@@ -862,12 +912,18 @@ void log_last_kmsg_option();
 void log_kmsg_option();
 void log_recovery_logcat();
 
-void log_archive_win();
 void log_archive_mac();
 
 void log_cpu_min_frequency();
 void log_cpu_max_frequency();
+
 void log_recovery();
+
+void reboot_recovery();
+void reboot_bootloader();
+void reboot_download();
+void reboot();
+void shutdown();
 
 void html_logcat();
 void html_dmesg();
