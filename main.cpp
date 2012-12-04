@@ -44,7 +44,7 @@ int main(int argc, char ** argv)
 
     size_t found;
 
-    char buffer[50];
+    char buffer[BUFFER_SIZE];
     string temp_buffer;
 
     adb_start_server();
@@ -207,15 +207,15 @@ int main(int argc, char ** argv)
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb get-serialno");
+        command.append(ADB_GET_SERIAL_NO);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb get-serialno");
+        command.append(ADB_GET_SERIAL_NO);
     }
 
-    FILE * serial_no = popen(command.c_str(), "r");
+    FILE * serial_no = popen(command.c_str(), READ_MODE);
 
     if(serial_no != NULL)
     {
@@ -229,14 +229,14 @@ int main(int argc, char ** argv)
 
     temp_buffer.assign(buffer);
 
-    found = temp_buffer.find('\n');
+    found = temp_buffer.find(NEWLINE);
 
     if(found != string::npos)
     {
         temp_buffer.erase(int(found));
     }
 
-    if(temp_buffer.compare("unknown") == 0)
+    if(temp_buffer.compare(DEVICE_NOT_FOUND_INDICATOR) == 0)
     {
         device_availability = -1;
     }
@@ -254,14 +254,7 @@ int main(int argc, char ** argv)
         return -1;
     }
 
-    if(os_type == 0)
-    {
-        system("cls");
-    }
-    else
-    {
-        system("clear");
-    }
+    clear_screen();
 
     if(argc <= 1)
     {
@@ -284,7 +277,7 @@ int main(int argc, char ** argv)
                     cout << "Please enter your Device ID: ";
                     getline(cin, device_id);
 
-                    FILE * serial_no = popen("adb get-serialno", "r");
+                    FILE * serial_no = popen(ADB_GET_SERIAL_NO, READ_MODE);
 
                     if(serial_no != NULL)
                     {
@@ -298,14 +291,14 @@ int main(int argc, char ** argv)
 
                         temp_buffer.assign(buffer);
 
-                        found = temp_buffer.find('\n');
+                        found = temp_buffer.find(NEWLINE);
 
                         if(found != string::npos)
                         {
                             temp_buffer.erase(int(found));
                         }
 
-                        if(temp_buffer.compare("unknown") == 0)
+                        if(temp_buffer.compare(DEVICE_NOT_FOUND_INDICATOR) == 0)
                         {
                             device_status = -1;
                         }
@@ -323,21 +316,21 @@ int main(int argc, char ** argv)
                     if(os_type == 0)
                     {
                         command.append(separator);
-                        command.append("adb -s ");
+                        command.append(ADB_WITH_DEVICE_ID);
                         command.append(device_id);
-                        command.append(" get-serialno");
+                        command.append(GET_SERIAL_NO);
                     }
                     else if(os_type == 1)
                     {
                         command.append(separator);
-                        command.append("adb -s ");
+                        command.append(ADB_WITH_DEVICE_ID);
                         command.append(device_id);
-                        command.append(" get-serialno");
+                        command.append(GET_SERIAL_NO);
                     }
 
                     if(device_id[0] != '\0')
                     {
-                        FILE * serial_no = popen(command.c_str(), "r");
+                        FILE * serial_no = popen(command.c_str(), READ_MODE);
 
                         if(serial_no != NULL)
                         {
@@ -351,14 +344,14 @@ int main(int argc, char ** argv)
 
                             temp_buffer.assign(buffer);
 
-                            found = temp_buffer.find('\n');
+                            found = temp_buffer.find(NEWLINE);
 
                             if(found != string::npos)
                             {
                                 temp_buffer.erase(int(found));
                             }
 
-                            if(temp_buffer.compare("unknown") == 0)
+                            if(temp_buffer.compare(DEVICE_NOT_FOUND_INDICATOR) == 0)
                             {
                                 device_status = -1;
                             }
@@ -375,14 +368,7 @@ int main(int argc, char ** argv)
 
                     command.clear();
 
-                    if(os_type == 0)
-                    {
-                        system("cls");
-                    }
-                    else
-                    {
-                        system("clear");
-                    }
+                    clear_screen();
                 }while(device_status == -1);
 
                 device_availability = 1; // Disable reprompt of Device ID after the Device ID has been entered
@@ -403,14 +389,14 @@ int main(int argc, char ** argv)
                 if(device_id[0] == '\0')
                 {
                     command.append(separator);
-                    command.append("adb shell getprop ro.product.model");
+                    command.append(ADB_GETPROP_PRODUCT_MODEL);
                 }
                 else
                 {
                     command.append(separator);
-                    command.append("adb -s ");
+                    command.append(ADB_WITH_DEVICE_ID);
                     command.append(device_id);
-                    command.append(" shell getprop ro.product.model");
+                    command.append(GETPROP_PRODUCT_MODEL);
                 }
             }
             else if(os_type == 1)
@@ -418,14 +404,14 @@ int main(int argc, char ** argv)
                 if(device_id[0] == '\0')
                 {
                     command.append(separator);
-                    command.append("adb shell getprop ro.product.model");
+                    command.append(ADB_GETPROP_PRODUCT_MODEL);
                 }
                 else
                 {
                     command.append(separator);
-                    command.append("adb -s ");
+                    command.append(ADB_WITH_DEVICE_ID);
                     command.append(device_id);
-                    command.append(" shell getprop ro.product.model");
+                    command.append(GETPROP_PRODUCT_MODEL);
                 }
             }
 
@@ -584,25 +570,11 @@ int main(int argc, char ** argv)
                 }
             }
 
-            if(os_type == 0)
-            {
-                system("cls");
-            }
-            else
-            {
-                system("clear");
-            }
+			clear_screen();
         }while(selection != 'q' && selection != 'Q');
     }
 
-    if(os_type == 0)
-    {
-        system("cls");
-    }
-    else
-    {
-        system("clear");
-    }
+	clear_screen();
 
     return 0;
 }

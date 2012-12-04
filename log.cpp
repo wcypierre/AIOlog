@@ -33,7 +33,7 @@ void log_essential()
     log_last_kmsg();
     log_kmsg();
 
-    log_archive("log_essential");
+    log_archive(LOG_ESSENTIAL);
 }
 
 void log_all()
@@ -43,6 +43,8 @@ void log_all()
     log_last_kmsg();
     log_kmsg();
     log_kernel_version();
+
+    log_archive(LOG_ALL);
 }
 
 void log_logcat()
@@ -56,28 +58,28 @@ void log_logcat()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -d -v threadtime > logcat.txt");
+        command.append(LOGCAT_THREADTIME);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -d -v threadtime > logcat.txt");
+        command.append(LOGCAT_THREADTIME);
     }
 
     system(command.c_str());
 
-    cout << "Logcat saved at logcat.txt" << endl;
+    cout << LOGCAT_MESSAGE << endl;
 
     dir_create();
-    log_push("logcat.txt", "/mnt/sdcard/logcat.txt");
-    log_push("logcat.txt", "/mnt/sdcard/.aiolog/logcat.txt");
-    log_push("logcat.txt", "/mnt/sdcard/aiolog/logcat.txt");
+    log_push(LOGCAT_FILENAME, LOGCAT_PHONE_ROOT_FILENAME);
+    log_push(LOGCAT_FILENAME, LOGCAT_PHONE_DOT_AIOLOG_FILENAME);
+    log_push(LOGCAT_FILENAME, LOGCAT_PHONE_AIOLOG_FILENAME);
 
-    log_archive("logcat");
+    log_archive(LOGCAT);
 
     command.clear();
 }
@@ -90,22 +92,21 @@ void log_logcat_continuous()
 
     wait_for_device();
 
-    cout << "Logcat will be saved at logcat.txt" << endl
-         << "Please press CTRL and C to close the program and stop the logging" << endl;
+    cout << LOGCAT_CONTINUOUS_MESSAGE << endl;
 
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -v threadtime > logcat.txt");
+        command.append(LOGCAT_CONTINUOUS_THREADTIME);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -v threadtime > logcat.txt");
+        command.append(LOGCAT_CONTINUOUS_THREADTIME);
     }
 
     system(command.c_str());
@@ -122,28 +123,28 @@ void log_logcat_radio()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -d -v threadtime -b radio > logcat_radio.txt");
+        command.append(LOGCAT_RADIO_THREADTIME);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -d -v threadtime -b radio > logcat_radio.txt");
+        command.append(LOGCAT_RADIO_THREADTIME);
     }
 
     system(command.c_str());
 
-    cout << "Logcat for radio issues will be saved at logcat_radio.txt" << endl;
+    cout << LOGCAT_RADIO_MESSAGE << endl;
 
     dir_create();
-    log_push("logcat_radio.txt", "/mnt/sdcard/logcat_radio.txt");
-    log_push("logcat_radio.txt", "/mnt/sdcard/.aiolog/logcat_radio.txt");
-    log_push("logcat_radio.txt", "/mnt/sdcard/aiolog/logcat_radio.txt");
+    log_push(LOGCAT_RADIO_FILENAME, LOGCAT_RADIO_PHONE_ROOT_FILENAME);
+    log_push(LOGCAT_RADIO_FILENAME, LOGCAT_RADIO_PHONE_DOT_AIOLOG_FILENAME);
+    log_push(LOGCAT_RADIO_FILENAME, LOGCAT_RADIO_PHONE_AIOLOG_FILENAME);
 
-    log_archive("logcat_radio");
+    log_archive(LOGCAT_RADIO);
 
     command.clear();
 }
@@ -159,51 +160,21 @@ void log_logcat_clear()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -c");
+        command.append(LOGCAT_CLEAR);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" logcat -c");
+        command.append(LOGCAT_CLEAR);
     }
 
     system(command.c_str());
 
-    cout << "Logcat is cleared" << endl;
-
-    command.clear();
-}
-
-void log_dmesg_clear()
-{
-    string command;
-
-    cout << endl;
-
-    wait_for_device();
-
-    if(os_type == 0)
-    {
-        command.append(separator);
-        command.append("adb -s ");
-        command.append(device_id);
-        command.append(" shell dmesg -c > .tmp");
-    }
-    else if(os_type == 1)
-    {
-        command.append(separator);
-        command.append("adb -s ");
-        command.append(device_id);
-        command.append(" shell dmesg -c > .tmp");
-    }
-
-    system(command.c_str());
-
-    cout << "Dmesg is cleared" << endl;
+    cout << LOGCAT_CLEAR_MESSAGE << endl;
 
     command.clear();
 }
@@ -219,28 +190,28 @@ void log_last_kmsg()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell cat /proc/last_kmsg > last_kmsg.txt");
+        command.append(LAST_KMSG_CODE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell cat /proc/last_kmsg > last_kmsg.txt");
+        command.append(LAST_KMSG_CODE);
     }
 
     system(command.c_str());
 
-    cout << "last_kmsg saved at last_kmsg.txt" << endl;
+    cout << LAST_KMSG_MESSAGE << endl;
 
     dir_create();
-    log_push("last_kmsg.txt", "/mnt/sdcard/last_kmsg.txt");
-    log_push("last_kmsg.txt", "/mnt/sdcard/.aiolog/last_kmsg.txt");
-    log_push("last_kmsg.txt", "/mnt/sdcard/aiolog/last_kmsg.txt");
+    log_push(LAST_KMSG_FILENAME, LAST_KMSG_PHONE_ROOT_FILENAME);
+    log_push(LAST_KMSG_FILENAME, LAST_KMSG_PHONE_DOT_AIOLOG_FILENAME);
+    log_push(LAST_KMSG_FILENAME, LAST_KMSG_PHONE_AIOLOG_FILENAME);
 
-    log_archive("last_kmsg");
+    log_archive(LAST_KMSG);
 
     command.clear();
 }
@@ -256,28 +227,58 @@ void log_dmesg()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell dmesg > dmesg.txt");
+        command.append(DMESG_CODE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell dmesg > dmesg.txt");
+        command.append(DMESG_CODE);
     }
 
     system(command.c_str());
 
-    cout << "dmesg saved at dmesg.txt" << endl;
+    cout << DMESG_MESSAGE << endl;
 
     dir_create();
-    log_push("dmesg.txt", "/mnt/sdcard/dmesg.txt");
-    log_push("dmesg.txt", "/mnt/sdcard/.aiolog/dmesg.txt");
-    log_push("dmesg.txt", "/mnt/sdcard/aiolog/dmesg.txt");
+    log_push(DMESG_FILENAME, DMESG_PHONE_ROOT_FILENAME);
+    log_push(DMESG_FILENAME, DMESG_PHONE_DOT_AIOLOG_FILENAME);
+    log_push(DMESG_FILENAME, DMESG_PHONE_AIOLOG_FILENAME);
 
     log_archive("dmesg");
+
+    command.clear();
+}
+
+void log_dmesg_clear()
+{
+    string command;
+
+    cout << endl;
+
+    wait_for_device();
+
+    if(os_type == 0)
+    {
+        command.append(separator);
+        command.append(ADB_WITH_DEVICE_ID);
+        command.append(device_id);
+        command.append(DMESG_CLEAR_CODE);
+    }
+    else if(os_type == 1)
+    {
+        command.append(separator);
+        command.append(ADB_WITH_DEVICE_ID);
+        command.append(device_id);
+        command.append(DMESG_CLEAR_CODE);
+    }
+
+    system(command.c_str());
+
+    cout << DMESG_CLEAR_MESSAGE << endl;
 
     command.clear();
 }
@@ -293,28 +294,28 @@ void log_kmsg()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell cat -f /proc/kmsg > kmsg.txt");
+        command.append(KMSG_CODE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell cat -f /proc/kmsg > kmsg.txt");
+        command.append(KMSG_CODE);
     }
 
     system(command.c_str());
 
-    cout << "kmsg saved at kmsg.txt" << endl;
+    cout << KMSG_MESSAGE << endl;
 
     dir_create();
-    log_push("kmsg.txt", "/mnt/sdcard/kmsg.txt");
-    log_push("kmsg.txt", "/mnt/sdcard/.aiolog/kmsg.txt");
-    log_push("kmsg.txt", "/mnt/sdcard/aiolog/kmsg.txt");
+    log_push(KMSG_FILENAME, KMSG_PHONE_ROOT_FILENAME);
+    log_push(KMSG_FILENAME, KMSG_PHONE_DOT_AIOLOG_FILENAME);
+    log_push(KMSG_FILENAME, KMSG_PHONE_AIOLOG_FILENAME);
 
-    log_archive("kmsg");
+    log_archive(KMSG);
 
     command.clear();
 }
@@ -327,25 +328,26 @@ void log_kmsg_continuous()
 
     wait_for_device();
 
-    cout << "kmsg will be saved at kmsg.txt" << endl;
-    cout << "Please press CTRL and C to close the program and stop the logging" << endl;
+    cout << KMSG_CONTINUOUS_MESSAGE << endl;
 
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell cat /proc/kmsg > kmsg.txt");
+        command.append(KMSG_CONTINUOUS_CODE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell cat /proc/kmsg > kmsg.txt");
+        command.append(KMSG_CONTINUOUS_CODE);
     }
 
     system(command.c_str());
+
+    command.clear();
 }
 
 void log_push(std::string from, std::string to)
@@ -357,21 +359,21 @@ void log_push(std::string from, std::string to)
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" push ");
+        command.append(ADB_PUSH_CODE);
         command.append(from);
-        command.append(" ");
+        command.append(WHITESPACE);
         command.append(to);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" push ");
+        command.append(ADB_PUSH_CODE);
         command.append(from);
-        command.append(" ");
+        command.append(WHITESPACE);
         command.append(to);
     }
 
@@ -391,16 +393,16 @@ void dir_create()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell mkdir -p /mnt/sdcard/aiolog");
+        command.append(DIR_AIOLOG_CREATE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell mkdir -p /mnt/sdcard/aiolog");
+        command.append(DIR_AIOLOG_CREATE);
     }
 
     system(command.c_str());
@@ -410,19 +412,21 @@ void dir_create()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell mkdir -p /mnt/sdcard/.aiolog");
+        command.append(DIR_DOT_AIOLOG_CREATE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell mkdir -p /mnt/sdcard/.aiolog");
+        command.append(DIR_DOT_AIOLOG_CREATE);
     }
 
     system(command.c_str());
+
+    command.clear();
 }
 
 void log_archive(std::string option)
@@ -430,61 +434,61 @@ void log_archive(std::string option)
     string archive_filename;
     string input_filename;
 
-    if(option.compare("logcat") == 0)
+    if(option.compare(LOGCAT) == 0)
     {
-        archive_filename = "logcat";
-        input_filename = "logcat.txt";
+        archive_filename = LOGCAT;
+        input_filename = LOGCAT_FILENAME;
     }
-    else if(option.compare("last_kmsg") == 0)
+    else if(option.compare(LAST_KMSG) == 0)
     {
-        archive_filename = "last_kmsg";
-        input_filename = "last_kmsg.txt";
+        archive_filename = LAST_KMSG;
+        input_filename = LAST_KMSG_FILENAME;
     }
-    else if(option.compare("dmesg") == 0)
+    else if(option.compare(DMESG) == 0)
     {
-        archive_filename = "dmesg";
-        input_filename = "dmesg.txt";
+        archive_filename = DMESG;
+        input_filename = DMESG_FILENAME;
     }
-    else if(option.compare("kmsg") == 0)
+    else if(option.compare(KMSG) == 0)
     {
-        archive_filename = "kmsg";
-        input_filename = "kmsg.txt";
+        archive_filename = KMSG;
+        input_filename = KMSG_FILENAME;
     }
-    else if(option.compare("log_essential") == 0)
+    else if(option.compare(LOG_ESSENTIAL) == 0)
     {
-        archive_filename = "log_essential";
-        input_filename = "logcat.txt kmsg.txt dmesg.txt last_kmsg.txt";
+        archive_filename = LOG_ESSENTIAL;
+        input_filename = LOG_ESSENTIAL_INPUT_FILENAME;
     }
-    else if(option.compare("log_all") == 0)
+    else if(option.compare(LOG_ALL) == 0)
     {
-        archive_filename = "log_all";
-        //input_filename = "logcat.txt kmsg.txt dmesg.txt last_kmsg.txt"; to be added
+        archive_filename = LOG_ALL;
+        input_filename = LOG_ALL_INPUT_FILENAME; // More to be added
     }
-    else if(option.compare("last_kmsg") == 0)
+    else if(option.compare(LAST_KMSG) == 0)
     {
-        archive_filename = "last_kmsg";
-        input_filename = "last_kmsg.txt";
+        archive_filename = LAST_KMSG;
+        input_filename = LAST_KMSG_FILENAME;
     }
-    else if(option.compare("logcat_radio") == 0)
+    else if(option.compare(LOGCAT_RADIO) == 0)
     {
-        archive_filename = "logcat_radio";
-        input_filename = "logcat_radio.txt";
+        archive_filename = LOGCAT_RADIO;
+        input_filename = LOGCAT_RADIO_FILENAME;
     }
-    else if(option.compare("kernel_version") == 0)
+    else if(option.compare(KERNEL_VERSION) == 0)
     {
-        archive_filename = "kernel_version";
-        input_filename = "kernel_version.txt";
+        archive_filename = KERNEL_VERSION;
+        input_filename = KERNEL_VERSION_FILENAME;
     }
 
     if(os_type == 0)
     {
-    	archive_filename.append(".zip");
+    	archive_filename.append(ZIP_DOT);
 
         log_archive_win(archive_filename, input_filename);
     }
     else if(os_type == 1)
     {
-    	archive_filename.append(".tar");
+    	archive_filename.append(TAR_DOT);
 
         log_archive_linux(archive_filename, input_filename);
     }
@@ -495,23 +499,23 @@ void log_archive_linux(std::string archive_filename, std::string input_filename)
     string command;
     string archive_command;
 
-    string remote_root_filename = "/mnt/sdcard/";
-    string remote_aiolog_filename = "/mnt/sdcard/";
-    string remote_dot_aiolog_filename = "/mnt/sdcard/";
+    string remote_root_filename = SDCARD_LOCATION;
+    string remote_aiolog_filename = SDCARD_LOCATION;
+    string remote_dot_aiolog_filename = SDCARD_LOCATION;
 
     cout << endl;
 
     remote_root_filename.append(archive_filename);
 
-    remote_aiolog_filename.append("aiolog/");
+    remote_aiolog_filename.append(AIOLOG_SLASH);
     remote_aiolog_filename.append(archive_filename);
 
-    remote_aiolog_filename.append(".aiolog/");
+    remote_aiolog_filename.append(AIOLOG_DOT_SLASH);
     remote_aiolog_filename.append(archive_filename);
 
-    archive_command.append("tar cvf ");
+    archive_command.append(TAR_CREATE);
     archive_command.append(archive_filename);
-    archive_command.append(" ");
+    archive_command.append(WHITESPACE);
     archive_command.append(input_filename);
 
     system(archive_command.c_str());
@@ -526,25 +530,25 @@ void log_archive_win(std::string archive_filename, std::string input_filename)
     string command;
     string archive_command;
 
-    string remote_root_filename = "/mnt/sdcard/";
-    string remote_aiolog_filename = "/mnt/sdcard/";
-    string remote_dot_aiolog_filename = "/mnt/sdcard/";
+    string remote_root_filename = SDCARD_LOCATION;
+    string remote_aiolog_filename = SDCARD_LOCATION;
+    string remote_dot_aiolog_filename = SDCARD_LOCATION;
 
     cout << endl;
 
     remote_root_filename.append(archive_filename);
 
-    remote_aiolog_filename.append("aiolog/");
+    remote_aiolog_filename.append(AIOLOG_SLASH);
     remote_aiolog_filename.append(archive_filename);
 
-    remote_aiolog_filename.append(".aiolog/");
+    remote_aiolog_filename.append(AIOLOG_DOT_SLASH);
     remote_aiolog_filename.append(archive_filename);
 
-    archive_command.append("7za a -tzip ");
+    archive_command.append(ZIP_CREATE);
     archive_command.append(archive_filename);
-    archive_command.append(" ");
+    archive_command.append(WHITESPACE);
     archive_command.append(input_filename);
-    archive_command.append(" -mmt -aot -y");
+    archive_command.append(ZIP_PARAM);
 
     system(archive_command.c_str());
 
@@ -557,7 +561,7 @@ void header()
 {
     cout << "**********************************************************" << endl;
     cout << "*              AIOlog - All in One Android Logger        *" << endl;
-    cout << "*                         Version: 0.7                   *" << endl;
+    cout << "*                         Version: " << AIOLOG_VERSION << "                   *" << endl;
     cout << "*                       By: wcypierre                    *" << endl;
     cout << "**********************************************************" << endl << endl;
 }
@@ -608,23 +612,23 @@ void log_kernel_version()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell uname -a > kernel_version.txt");
+        command.append(KERNEL_VERSION_CODE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" shell uname -a > kernel_version.txt");
+        command.append(KERNEL_VERSION_CODE);
     }
 
     system(command.c_str());
 
-    cout << "Kernel Version is saved at kernel_version.txt" << endl;
+    cout << KERNEL_VERSION_MESSAGE << endl;
 
-    log_archive("kernel_version");
+    log_archive(KERNEL_VERSION);
 
     command.clear();
 }
@@ -634,15 +638,15 @@ void log_cid_version()
     string command;
 
     string temp_buffer;
-    char buffer[50];
+    char buffer[BUFFER_SIZE];
 
     size_t found;
 
-    command.append("adb -s ");
+    command.append(ADB_WITH_DEVICE_ID);
     command.append(device_id);
-    command.append(" shell getprop ro.cid");
+    command.append(CID_CODE);
 
-    FILE * cid = popen(command.c_str(), "r");
+    FILE * cid = popen(command.c_str(), READ_MODE);
 
     cout << endl;
 
@@ -665,11 +669,11 @@ void log_cid_version()
             temp_buffer.erase(int(found));
         }
 
-        if(temp_buffer.compare("error: device not found") == 0)
+        if(temp_buffer.compare(DEVICE_NOT_FOUND_MESSAGE) == 0)
         {
             cout << "Device Not found" << endl << endl;
         }
-        else if(temp_buffer.compare("") == 0)
+        else if(temp_buffer.compare(EMPTY) == 0)
         {
             cout << "AIOlog [Error]: Invalid CID location, please contact me via xda or my email @ wcypierre@gmail.com and provide me with your Device name" << endl << endl;
         }
@@ -689,7 +693,7 @@ void set_device_id(string & device_id)
     int device_status = -1;
 
     cin.clear();
-    cin.ignore(100, '\n');
+    cin.ignore(100, NEWLINE);
 
     do
     {
@@ -702,12 +706,12 @@ void set_device_id(string & device_id)
         if(os_type == 0)
         {
             command.append(separator);
-            command.append("adb devices");
+            command.append(ADB_DEVICES);
         }
         else if(os_type == 1)
         {
             command.append(separator);
-            command.append("adb devices");
+            command.append(ADB_DEVICES);
         }
 
         system(command.c_str());
@@ -724,29 +728,22 @@ void set_device_id(string & device_id)
             if(os_type == 0)
             {
                 command.append(separator);
-                command.append("adb -s ");
+                command.append(ADB_WITH_DEVICE_ID);
                 command.append(temp_device_id);
-                command.append(" shell uname -a");
+                command.append(KERNEL_VERSION_LOCAL_CODE);
             }
             else if(os_type == 1)
             {
                 command.append(separator);
-                command.append("adb -s ");
+                command.append(ADB_WITH_DEVICE_ID);
                 command.append(temp_device_id);
-                command.append(" shell uname -a");
+                command.append(KERNEL_VERSION_LOCAL_CODE);
             }
 
             device_status = system(command.c_str());
         }
 
-        if(os_type == 0)
-        {
-            system("cls");
-        }
-        else
-        {
-            system("clear");
-        }
+        clear_screen();
     }while(device_status == 1);
 
     if(temp_device_id[0] != '\0')
@@ -765,12 +762,12 @@ void adb_start_server()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb start-server");
+        command.append(ADB_START_SERVER);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb start-server");
+        command.append(ADB_START_SERVER);
     }
 
     system(command.c_str());
@@ -785,16 +782,16 @@ void wait_for_device()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" wait-for-device");
+        command.append(ADB_WAIT_FOR_DEVICE);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb -s ");
+        command.append(ADB_WITH_DEVICE_ID);
         command.append(device_id);
-        command.append(" wait-for-device");
+        command.append(ADB_WAIT_FOR_DEVICE);
     }
 
     system(command.c_str());
@@ -809,17 +806,29 @@ void adb_devices()
     if(os_type == 0)
     {
         command.append(separator);
-        command.append("adb devices");
+        command.append(ADB_DEVICES);
     }
     else if(os_type == 1)
     {
         command.append(separator);
-        command.append("adb devices");
+        command.append(ADB_DEVICES);
     }
 
     system(command.c_str());
 
     command.clear();
+}
+
+void clear_screen()
+{
+    if(os_type == 0)
+    {
+        system(CLEAR_SCREEN_WIN);
+    }
+    else
+    {
+        system(CLEAR_SCREEN_UNIX);
+    }
 }
 
 // To do
