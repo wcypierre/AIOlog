@@ -23,6 +23,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include "log.h"
+#include "lang.h"
+#include "error.h"
 
 using namespace std;
 
@@ -248,7 +250,7 @@ void log_dmesg()
     log_push(DMESG_FILENAME, DMESG_PHONE_DOT_AIOLOG_FILENAME);
     log_push(DMESG_FILENAME, DMESG_PHONE_AIOLOG_FILENAME);
 
-    log_archive("dmesg");
+    log_archive(DMESG);
 
     command.clear();
 }
@@ -576,29 +578,29 @@ void help()
     cout << "--dmesg -d\t\t\tDumps the dmesg at the current directory and the file is called dmesg.txt" << endl;
     cout << "--kmsg -k\t\t\tDumps the kmsg at the current directory and the file is called kmsg.txt" << endl;
 
-    cout << endl << "Press enter to continue" << endl;
+    cout << endl << EN_ENTER_TO_CONTINUE << endl;
     cin.get();
 }
 
 void misc_options()
 {
-    cout << "1. Kernel Version" << endl;
-    cout << "2. CID Version" << endl;
-    cout << "B. Back to Main Menu" << endl;
+    cout << EN_MISC_MENU_OPTION_1 << endl;
+    cout << EN_MISC_MENU_OPTION_2 << endl;
+    cout << EN_INMENU_OPTION_BACK << endl;
 }
 
 void settings_options()
 {
-    cout << "1. Set Device ID" << endl;
-    cout << "B. Back to Main Menu" << endl;
+    cout << EN_SETTINGS_MENU_OPTION_1 << endl;
+    cout << EN_INMENU_OPTION_BACK << endl;
 }
 
 void advanced_options()
 {
-    cout << "1. Logcat Radio" << endl;
-    cout << "2. Logcat Clear" << endl;
-    cout << "3. Dmesg Clear" << endl;
-    cout << "B. Back to Main Menu" << endl;
+    cout << EN_ADVANCED_MENU_OPTION_1 << endl;
+    cout << EN_ADVANCED_MENU_OPTION_2 << endl;
+    cout << EN_ADVANCED_MENU_OPTION_3 << endl;
+    cout << EN_INMENU_OPTION_BACK << endl;
 }
 
 void log_kernel_version()
@@ -671,15 +673,15 @@ void log_cid_version()
 
         if(temp_buffer.compare(DEVICE_NOT_FOUND_MESSAGE) == 0)
         {
-            cout << "Device Not found" << endl << endl;
+            cout << EN_DEVICE_NOT_FOUND << endl << endl;
         }
         else if(temp_buffer.compare(EMPTY) == 0)
         {
-            cout << "AIOlog [Error]: Invalid CID location, please contact me via xda or my email @ wcypierre@gmail.com and provide me with your Device name" << endl << endl;
+            cout << CID_INVALID_LOCATION << endl << endl;
         }
         else
         {
-            cout << "CID Version: " << temp_buffer << endl << endl;
+            cout << EN_CID_VERSION_SHOW << temp_buffer << endl << endl;
         }
     }
 
@@ -699,9 +701,7 @@ void set_device_id(string & device_id)
     {
         command.clear();
 
-        cout << "*****************" << endl;
-        cout << "* Set Device ID *" << endl;
-        cout << "*****************" << endl;
+        cout << EN_SET_DEVICE_ID;
 
         if(os_type == 0)
         {
@@ -718,7 +718,7 @@ void set_device_id(string & device_id)
 
         cout << endl;
 
-        cout << "Please enter your Device ID: ";
+        cout << EN_DEVICE_ID_PROMPT;
         getline(cin, temp_device_id);
 
         command.clear();

@@ -24,6 +24,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include "log.h"
+#include "lang.h"
+#include "error.h"
 
 using namespace std;
 
@@ -249,7 +251,7 @@ int main(int argc, char ** argv)
 
     if(argc == 0)
     {
-        cout << "Please include the parameters and try again" << endl;
+        cout << EN_PARAMETER_ERROR_MSG << endl;
 
         return -1;
     }
@@ -274,7 +276,7 @@ int main(int argc, char ** argv)
 
                     cout << endl;
 
-                    cout << "Please enter your Device ID: ";
+                    cout << EN_DEVICE_ID_PROMPT;
                     getline(cin, device_id);
 
                     FILE * serial_no = popen(ADB_GET_SERIAL_NO, READ_MODE);
@@ -360,7 +362,7 @@ int main(int argc, char ** argv)
                                 device_status = 1;
                             }
 
-                            cout << "Device ID: " << device_id << endl;
+                            cout << EN_DEVICE_ID_SHOW << device_id << endl;
                         }
 
                         pclose(serial_no);
@@ -380,7 +382,7 @@ int main(int argc, char ** argv)
                 header();
             }
 
-            cout << "Device Model: ";
+            cout << EN_DEVICE_MODEL_SHOW;
 
             command.clear();
 
@@ -421,27 +423,27 @@ int main(int argc, char ** argv)
 
             cout << endl;
 
-            cout << "Functions: " << endl;
-            cout << "1. Log Essential(Logcat, last_kmsg, dmesg, kmsg)" << endl;
-            cout << "2. Logcat" << endl;
-            cout << "3. Logcat Continuous" << endl;
-            cout << "4. Last_Kmsg" << endl;
-            cout << "5. Dmesg" << endl;
-            cout << "6. Kmsg" << endl;
-            cout << "7. Kmsg Continuous" << endl;
-            cout << "M. Miscellaneous" << endl;
-            cout << "S. Settings" << endl;
-            cout << "A. Advanced" << endl;
-            cout << "Q. Quit" << endl << endl;
+            cout << EN_FUNCTIONS_SHOW << endl;
+            cout << EN_MENU_OPTION_1 << endl;
+            cout << EN_MENU_OPTION_2 << endl;
+            cout << EN_MENU_OPTION_3 << endl;
+            cout << EN_MENU_OPTION_4 << endl;
+            cout << EN_MENU_OPTION_5 << endl;
+            cout << EN_MENU_OPTION_6 << endl;
+            cout << EN_MENU_OPTION_7 << endl;
+            cout << EN_MENU_OPTION_MISCELLANEOUS << endl;
+            cout << EN_MENU_OPTION_SETTINGS << endl;
+            cout << EN_MENU_OPTION_ADVANCED << endl;
+            cout << EN_MENU_OPTION_QUIT << endl << endl;
 
             do
             {
-                cout << "Please enter your selection: ";
+                cout << EN_SELECTION_INPUT_PROMPT;
                 cin  >> selection;
 
                 if(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != 'm' && selection != 'M' && selection != 's' && selection != 'S' && selection != 'a' && selection != 'A' && selection != 'q' && selection != 'Q')
                 {
-                    cout << "Invalid selection, please try again" << endl;
+                    cout << EN_SELECTION_INVALID_MSG << endl;
                 }
             }while(selection != '1' && selection != '2' && selection != '3' && selection != '4' && selection != '5' && selection != '6' && selection != '7' && selection != 'm' && selection != 'M' && selection != 's' && selection != 'S' && selection != 'a' && selection != 'A' && selection != 'q' && selection != 'Q');
 
@@ -479,18 +481,18 @@ int main(int argc, char ** argv)
 
                 do
                 {
-                    cout << endl << "Please enter your selection: ";
+                    cout << endl << EN_SELECTION_INPUT_PROMPT;
                     cin  >> misc_selection;
 
                     if(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B')
                     {
-                        cout << "Invalid selection, please try again by selecting the number of the option" << endl;
+                        cout << EN_INMENU_OPTION_INVALID_MSG << endl;
                     }
                 }while(misc_selection != '1' && misc_selection != 'b' && misc_selection != 'B');
 
                 if(misc_selection == '1')
                 {
-                    cout << "Current Device ID: " << device_id << endl << endl;
+                    cout << EN_DEVICE_ID_CURRENT_SHOW << device_id << endl << endl;
 
                     set_device_id(device_id);
                 }
@@ -501,12 +503,12 @@ int main(int argc, char ** argv)
 
                 do
                 {
-                    cout << endl << "Please enter your selection: ";
+                    cout << endl << EN_SELECTION_INPUT_PROMPT;
                     cin  >> misc_selection;
 
                     if(misc_selection != '1' && misc_selection != '2' && misc_selection != 'b' && misc_selection != 'B')
                     {
-                        cout << "Invalid selection, please try again by selecting the number of the option" << endl;
+                        cout << EN_INMENU_OPTION_INVALID_MSG << endl;
                     }
                 }while(misc_selection != '1' && misc_selection != '2' && misc_selection != 'b' && misc_selection != 'B');
 
@@ -520,7 +522,7 @@ int main(int argc, char ** argv)
                 {
                     log_cid_version();
 
-                    cout << "Press enter to continue" << endl;
+                    cout << EN_ENTER_TO_CONTINUE << endl;
 
                     cin.get();
                     cin.get();
@@ -532,12 +534,12 @@ int main(int argc, char ** argv)
 
                 do
                 {
-                    cout << endl << "Please enter your selection: ";
+                    cout << endl << EN_SELECTION_INPUT_PROMPT;
                     cin  >> misc_selection;
 
                     if(misc_selection != '1' && misc_selection != '2' && misc_selection != '3' && misc_selection != 'b' && misc_selection != 'B')
                     {
-                        cout << "Invalid selection, please try again by selecting the number of the option" << endl;
+                        cout << EN_INMENU_OPTION_INVALID_MSG << endl;
                     }
                 }while(misc_selection != '1' && misc_selection != '2' && misc_selection != '3' && misc_selection != 'b' && misc_selection != 'B');
 
@@ -563,7 +565,7 @@ int main(int argc, char ** argv)
             {
                 if(selection != 's' && selection != 'S' && selection != 'm' && selection != 'M' && selection != 'a' && selection != 'A')
                 {
-                    cout << endl << "Press enter to continue" << endl;
+                    cout << endl << EN_ENTER_TO_CONTINUE << endl;
 
                     cin.get();
                     cin.get();

@@ -55,11 +55,6 @@ const char LOGCAT_CONTINUOUS_THREADTIME[] = " logcat -v threadtime > logcat.txt"
 const char LOGCAT_RADIO_THREADTIME[] = " logcat -d -v threadtime -b radio > logcat_radio.txt";
 const char LOGCAT_CLEAR[] = " logcat -c";
 
-const char LOGCAT_MESSAGE[] = "Logcat saved at logcat.txt";
-const char LOGCAT_CONTINUOUS_MESSAGE[] = "Logcat will be saved at logcat.txt \nPlease press CTRL and C to close the program and stop the logging";
-const char LOGCAT_RADIO_MESSAGE[] = "Logcat for radio issues will be saved at logcat_radio.txt";
-const char LOGCAT_CLEAR_MESSAGE[] = "Logcat is cleared";
-
 const char LOGCAT_FILENAME[] = "logcat.txt";
 const char LOGCAT_PHONE_ROOT_FILENAME[] = "/mnt/sdcard/logcat.txt";
 const char LOGCAT_PHONE_AIOLOG_FILENAME[] = "/mnt/sdcard/aiolog/logcat.txt";
@@ -72,8 +67,6 @@ const char LOGCAT_RADIO_PHONE_DOT_AIOLOG_FILENAME[] = "/mnt/sdcard/.aiolog/logca
 
 const char LAST_KMSG_CODE[] = " shell cat /proc/last_kmsg > last_kmsg.txt";
 
-const char LAST_KMSG_MESSAGE[] = "last_kmsg saved at last_kmsg.txt";
-
 const char LAST_KMSG_FILENAME[] = "last_kmsg.txt";
 const char LAST_KMSG_PHONE_ROOT_FILENAME[] = "/mnt/sdcard/last_kmsg.txt";
 const char LAST_KMSG_PHONE_AIOLOG_FILENAME[] = "/mnt/sdcard/aiolog/last_kmsg.txt";
@@ -82,9 +75,6 @@ const char LAST_KMSG_PHONE_DOT_AIOLOG_FILENAME[] = "/mnt/sdcard/.aiolog/last_kms
 const char KMSG_CODE[] = " shell cat -f /proc/kmsg > kmsg.txt";
 const char KMSG_CONTINUOUS_CODE[] = " shell cat /proc/kmsg > kmsg.txt";
 
-const char KMSG_MESSAGE[] = "kmsg saved at kmsg.txt";
-const char KMSG_CONTINUOUS_MESSAGE[] = "kmsg will be saved at kmsg.txt\nPlease press CTRL and C to close the program and stop the logging";
-
 const char KMSG_FILENAME[] = "kmsg.txt";
 const char KMSG_PHONE_ROOT_FILENAME[] = "/mnt/sdcard/kmsg.txt";
 const char KMSG_PHONE_AIOLOG_FILENAME[] = "/mnt/sdcard/aiolog/kmsg.txt";
@@ -92,9 +82,6 @@ const char KMSG_PHONE_DOT_AIOLOG_FILENAME[] = "/mnt/sdcard/.aiolog/kmsg.txt";
 
 const char DMESG_CODE[] = " shell dmesg > dmesg.txt";
 const char DMESG_CLEAR_CODE[] = " shell dmesg -c > .tmp";
-
-const char DMESG_MESSAGE[] = "dmesg saved at dmesg.txt";
-const char DMESG_CLEAR_MESSAGE[] = "Dmesg is cleared";
 
 const char DMESG_FILENAME[] = "dmesg.txt";
 const char DMESG_PHONE_ROOT_FILENAME[] = "/mnt/sdcard/dmesg.txt";
@@ -106,11 +93,7 @@ const char KERNEL_VERSION_FILENAME[] = "kernel_version.txt";
 const char KERNEL_VERSION_CODE[] = " shell uname -a > kernel_version.txt";
 const char KERNEL_VERSION_LOCAL_CODE[] = " shell uname -a";
 
-const char KERNEL_VERSION_MESSAGE[] = "Kernel Version is saved at kernel_version.txt";
-
 const char CID_CODE[] = " shell getprop ro.cid";
-
-const char CID_MESSAGE[] = "dmesg saved at dmesg.txt";
 
 const char CID_FILENAME[] = "cid.txt";
 const char CID_PHONE_ROOT_FILENAME[] = "/mnt/sdcard/cid.txt";
@@ -210,6 +193,10 @@ void log_dmesg_option();
 void log_last_kmsg_option();
 void log_kmsg_option();
 void log_recovery_logcat();
+
+void log_dumpsys();
+void log_dumpstate();
+void log_bugreport();
 
 void log_archive_mac();
 
