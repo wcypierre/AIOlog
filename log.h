@@ -223,4 +223,9 @@ void open_twitter();
 void open_gplus();
 void open_email();
 
+void battery_voltage();
+bool battery_charged();
+
+void cpu_info();
+
 #endif
