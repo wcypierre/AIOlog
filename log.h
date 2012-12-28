@@ -218,4 +218,9 @@ void html_dmesg();
 void html_kmsg();
 void html_last_kmsg();
 
+void open_xda();
+void open_twitter();
+void open_gplus();
+void open_email();
+
 #endif
