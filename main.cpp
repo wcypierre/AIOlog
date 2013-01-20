@@ -384,6 +384,8 @@ int main(int argc, char ** argv)
 
             cout << EN_DEVICE_MODEL_SHOW;
 
+            cout.flush();
+
             command.clear();
 
             if(os_type == 0)
