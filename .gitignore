@@ -1,0 +1,13 @@
+logcat.*
+dmesg.*
+kmsg.*
+last_kmsg.*
+kernel_version.*
+cid.*
+log_essential.*
+log_all.*
+aiolog
+*.save
+bin/*
+obj/*
+.tmp
