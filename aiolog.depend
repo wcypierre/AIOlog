@@ -1,0 +1,46 @@
+# depslib dependency file v1.0
+1354605169 source:c:\users\intel\desktop\c++ playground\aiolog\main.cpp
+	<iostream>
+	<string>
+	<cstring>
+	<cstdlib>
+	<cstdio>
+	"log.h"
+
+1354604776 
+
+1354605146 c:\users\intel\desktop\c++ playground\aiolog\log.h
+
+1354604776 source:c:\users\intel\desktop\c++ playground\aiolog\log.cpp
+	<iostream>
+	<string>
+	<cstdlib>
+	<cstdio>
+	"log.h"
+
+1358698171 source:/home/wcypierre/aiolog/log.cpp
+	<iostream>
+	<string>
+	<cstdlib>
+	<cstdio>
+	"log.h"
+	"lang.h"
+	"error.h"
+
+1358697617 /home/wcypierre/aiolog/log.h
+
+1356683308 /home/wcypierre/aiolog/lang.h
+	<string>
+
+1356683308 /home/wcypierre/aiolog/error.h
+
+1358696752 source:/home/wcypierre/aiolog/main.cpp
+	<iostream>
+	<string>
+	<cstring>
+	<cstdlib>
+	<cstdio>
+	"log.h"
+	"lang.h"
+	"error.h"
+
