@@ -481,6 +481,11 @@ void log_archive(std::string option)
         archive_filename = KERNEL_VERSION;
         input_filename = KERNEL_VERSION_FILENAME;
     }
+    else if(option.compare(CID_VERSION) == 0)
+    {
+        archive_filename = CID_VERSION;
+        input_filename = CID_VERSION_FILENAME;
+    }
 
     if(os_type == 0)
     {
@@ -512,8 +517,8 @@ void log_archive_linux(std::string archive_filename, std::string input_filename)
     remote_aiolog_filename.append(AIOLOG_SLASH);
     remote_aiolog_filename.append(archive_filename);
 
-    remote_aiolog_filename.append(AIOLOG_DOT_SLASH);
-    remote_aiolog_filename.append(archive_filename);
+    remote_dot_aiolog_filename.append(AIOLOG_DOT_SLASH);
+    remote_dot_aiolog_filename.append(archive_filename);
 
     archive_command.append(TAR_CREATE);
     archive_command.append(archive_filename);
@@ -543,8 +548,8 @@ void log_archive_win(std::string archive_filename, std::string input_filename)
     remote_aiolog_filename.append(AIOLOG_SLASH);
     remote_aiolog_filename.append(archive_filename);
 
-    remote_aiolog_filename.append(AIOLOG_DOT_SLASH);
-    remote_aiolog_filename.append(archive_filename);
+    remote_dot_aiolog_filename.append(AIOLOG_DOT_SLASH);
+    remote_dot_aiolog_filename.append(archive_filename);
 
     archive_command.append(ZIP_CREATE);
     archive_command.append(archive_filename);
@@ -686,6 +691,16 @@ void log_cid_version()
     }
 
     pclose(cid);
+
+    command.clear();
+
+    command.append(ADB_WITH_DEVICE_ID);
+    command.append(device_id);
+    command.append(CID_TO_TXT);
+
+    system(command.c_str());
+
+    log_archive(CID_VERSION);
 }
 
 void set_device_id(string & device_id)
@@ -693,6 +708,11 @@ void set_device_id(string & device_id)
     string command;
     string temp_device_id;
     int device_status = -1;
+
+    char buffer[BUFFER_SIZE];
+    string temp_buffer;
+
+    size_t found;
 
     cin.clear();
     cin.ignore(100, NEWLINE);
@@ -723,28 +743,46 @@ void set_device_id(string & device_id)
 
         command.clear();
 
-        if(temp_device_id[0] != '\0')
+        if(device_id[0] != '\0')
         {
-            if(os_type == 0)
+            FILE * serial_no = popen(command.c_str(), READ_MODE);
+
+            if(serial_no != NULL)
             {
-                command.append(separator);
-                command.append(ADB_WITH_DEVICE_ID);
-                command.append(temp_device_id);
-                command.append(KERNEL_VERSION_LOCAL_CODE);
-            }
-            else if(os_type == 1)
-            {
-                command.append(separator);
-                command.append(ADB_WITH_DEVICE_ID);
-                command.append(temp_device_id);
-                command.append(KERNEL_VERSION_LOCAL_CODE);
+                while(fgets(buffer, sizeof(buffer), serial_no) != NULL)
+                {
+                    while(fgets(buffer, sizeof(buffer), serial_no) != NULL)
+                    {
+
+                    }
+                }
+
+                temp_buffer.assign(buffer);
+
+                found = temp_buffer.find(NEWLINE);
+
+                if(found != string::npos)
+                {
+                    temp_buffer.erase(int(found));
+                }
+
+                if(temp_buffer.compare(DEVICE_NOT_FOUND_INDICATOR) == 0)
+                {
+                    device_status = -1;
+                }
+                else
+                {
+                    device_status = 1;
+                }
+
+                cout << EN_DEVICE_ID_SHOW << device_id << endl;
             }
 
-            device_status = system(command.c_str());
+            pclose(serial_no);
         }
 
         clear_screen();
-    }while(device_status == 1);
+    }while(device_status != 1);
 
     if(temp_device_id[0] != '\0')
     {

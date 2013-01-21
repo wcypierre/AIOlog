@@ -44,6 +44,7 @@ const char KMSG[] = "kmsg";
 const char LAST_KMSG[] = "last_kmsg";
 const char DMESG[] = "dmesg";
 const char KERNEL_VERSION[] = "kernel_version";
+const char CID_VERSION[] = "cid";
 const char LOG_ESSENTIAL[] = "log_essential";
 const char LOG_ALL[] = "log_all";
 
@@ -94,8 +95,9 @@ const char KERNEL_VERSION_CODE[] = " shell uname -a > kernel_version.txt";
 const char KERNEL_VERSION_LOCAL_CODE[] = " shell uname -a";
 
 const char CID_CODE[] = " shell getprop ro.cid";
+const char CID_TO_TXT[] = " shell getprop ro.cid > cid.txt";
 
-const char CID_FILENAME[] = "cid.txt";
+const char CID_VERSION_FILENAME[] = "cid.txt";
 const char CID_PHONE_ROOT_FILENAME[] = "/mnt/sdcard/cid.txt";
 const char CID_PHONE_AIOLOG_FILENAME[] = "/mnt/sdcard/aiolog/cid.txt";
 const char CID_PHONE_DOT_AIOLOG_FILENAME[] = "/mnt/sdcard/.aiolog/cid.txt";
